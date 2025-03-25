@@ -4,12 +4,34 @@ using UnityEditor.Build.Content;
 
 public class CardManager : MonoBehaviour
 {
+
+    static CardManager _instance;
+    public static CardManager Instance => _instance;
     public List<Card> deck;
     public List<Card> playerDeck;
     public List<Card> enemyDeck;
     public List<Card> usedDeck;
 
+    private void Awake()
+    {
+        _instance = this;
+        Init();
+    }
+    private void Start()
+    {
+        //FirstDealing();
+    }
+    private void Update()
+    {
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+        //    GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn;
+        //}
 
+        //if (Input.GetKeyDown(KeyCode.Space)){
+        //    Dealing();
+        //}
+    }
     public void Init() //초기화 시 덱에 모든 카드 넣기
     {
         ResetDeck();
@@ -37,9 +59,10 @@ public class CardManager : MonoBehaviour
     {
         if (deck.Count == 0)
         {
-            GameManager.instance.isPlayerTurn = !GameManager.instance.isPlayerTurn; //덱에 남은 카드가 없을 시 턴 종료
+            GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn; //덱에 남은 카드가 없을 시 턴 종료
+            return;
         }
-        if (GameManager.instance.isPlayerTurn) //현재 플레이어 턴일시
+        if (GameManager.Instance.IsPlayerTurn) //현재 플레이어 턴일시
         {
             int deckIndex = Random.Range(0, deck.Count);
             playerDeck.Add(deck[deckIndex]);
@@ -77,7 +100,7 @@ public class CardManager : MonoBehaviour
         usedDeck.Clear();
         for (int i = 0; i < 52; i++)
         {
-            deck.Add(new Card());
+            deck.Add(ScriptableObject.CreateInstance<Card>());
         }
     }
 
