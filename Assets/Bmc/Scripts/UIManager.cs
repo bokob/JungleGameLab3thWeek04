@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
     Button _addBtn;
     Button _stopBtn;
     Button _usedCardBtn;
-    Canvas usedCardCanvas;
+    Canvas _usedCardCanvas;
     TextMeshProUGUI _gameResult;
 
     void Awake()
