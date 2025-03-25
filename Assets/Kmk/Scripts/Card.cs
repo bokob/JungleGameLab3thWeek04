@@ -1,11 +1,9 @@
 using UnityEngine;
-using Kmk;
 
-[CreateAssetMenu(fileName = "NewScriptableObjectScript", menuName = "Scriptable Objects/NewScriptableObjectScript")]
-public class Card : ScriptableObject
+
+
+public class Card : MonoBehaviour
 {
-    public int number; //카드
-    public Define.CardShape Shape; //카드문양
-    
-
+    public int Number => Number; //카드 포인트
+    public bool IsAce => IsAce; //에이스 카드인지 체크
 }
