@@ -17,10 +17,10 @@ public class CardManager : MonoBehaviour
         _instance = this;
         Init();
     }
-    //private void Start()
-    //{
-    //    FirstDealing();
-    //}
+    private void Start()
+    {
+        FirstDealing();
+    }
     //private void Update()
     //{
     //    if (Input.GetKeyDown(KeyCode.T))
@@ -64,7 +64,7 @@ public class CardManager : MonoBehaviour
             usedDeck.Add(deck[deckIndex]);
             deck.RemoveAt(deckIndex);
         }
-        //GameManager.Instance.CheckState();
+        GameManager.Instance.CheckState();
     }
 
     public void Dealing() //덱에서 한 장을 뽑아 플레이어 또는 상대 덱에 넣기
@@ -72,7 +72,7 @@ public class CardManager : MonoBehaviour
         if (deck.Count == 0)
         {
             GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn; //덱에 남은 카드가 없을 시 턴 종료
-            //GameManager.Instance.CheckState(); //턴 종료
+            GameManager.Instance.CheckState(); //턴 종료
             return;
         }
         if (GameManager.Instance.IsPlayerTurn) //현재 플레이어 턴일시
