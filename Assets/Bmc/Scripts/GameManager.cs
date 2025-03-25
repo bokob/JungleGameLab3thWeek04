@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance => _instance;
     static GameManager _instance;
 
+    public bool IsPlayerTurn { get; set; }
     bool _isPlayerTurn = false;
     Player _player;
     Enemy _enemy;
