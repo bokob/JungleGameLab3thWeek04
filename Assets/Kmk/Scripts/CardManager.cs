@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.Build.Content;
+using System;
 
 public class CardManager : MonoBehaviour
 {
@@ -17,21 +17,32 @@ public class CardManager : MonoBehaviour
         _instance = this;
         Init();
     }
-    private void Start()
-    {
-        //FirstDealing();
-    }
-    private void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.T))
-        //{
-        //    GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn;
-        //}
+    //private void Start()
+    //{
+    //    FirstDealing();
+    //}
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.T))
+    //    {
+    //        GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn;
+    //    }
 
-        //if (Input.GetKeyDown(KeyCode.Space)){
-        //    Dealing();
-        //}
-    }
+    //    if (Input.GetKeyDown(KeyCode.Space))
+    //    {
+    //        Dealing();
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.R))
+    //    {
+    //        FirstDealing();
+    //    }
+
+    //    if (Input.GetKeyDown(KeyCode.C))
+    //    {
+    //        Tuple<int, int> test = CalculatePoint();
+    //        Debug.Log($"Enemy Point {test.Item1} Player Point {test.Item2}");
+    //    }
+    //}
     public void Init() //초기화 시 덱에 모든 카드 넣기
     {
         ResetDeck();
@@ -44,11 +55,11 @@ public class CardManager : MonoBehaviour
         }
         for (int i = 0; i < 2; i++)
         {
-            int deckIndex = Random.Range(0, deck.Count);
+            int deckIndex = UnityEngine.Random.Range(0, deck.Count);
             enemyDeck.Add(deck[deckIndex]); //덱에서 랜덤하게 카드를 뽑아 상대 덱에 넣기
             usedDeck.Add(deck[deckIndex]); //뽑힌 카드를 사용된 카드 리스트에 넣기
             deck.RemoveAt(deckIndex); //뽑힌 카드를 덱에서 제거
-            deckIndex = Random.Range(0, deck.Count); //위 상대 딜링과 동일
+            deckIndex = UnityEngine.Random.Range(0, deck.Count); //위 상대 딜링과 동일
             playerDeck.Add(deck[deckIndex]);
             usedDeck.Add(deck[deckIndex]);
             deck.RemoveAt(deckIndex);
@@ -66,35 +77,35 @@ public class CardManager : MonoBehaviour
         }
         if (GameManager.Instance.IsPlayerTurn) //현재 플레이어 턴일시
         {
-            int deckIndex = Random.Range(0, deck.Count);
+            int deckIndex = UnityEngine.Random.Range(0, deck.Count);
             playerDeck.Add(deck[deckIndex]);
             usedDeck.Add(deck[deckIndex]);
             deck.RemoveAt(deckIndex);
         }
         else //현재 상대 턴일 시
         {
-            int deckIndex = Random.Range(0, deck.Count);
+            int deckIndex = UnityEngine.Random.Range(0, deck.Count);
             enemyDeck.Add(deck[deckIndex]);
             usedDeck.Add(deck[deckIndex]);
             deck.RemoveAt(deckIndex);
         }
     }
 
-    public (int, int) CalculatePoint()
+    public Tuple<int,int> CalculatePoint()
     {
         int enemyPoint = 0;
         foreach (Card card in enemyDeck)//상대 덱에 있는 카드의 값을 모두 계산
         {
-            enemyPoint += card.number;
+            enemyPoint += card.Number;
         }
         int playerPoint = 0;
         foreach (Card card in playerDeck)//플레이어 덱에 있는 카드의 값을 모두 계산
         {
-            playerPoint += card.number;
+            playerPoint += card.Number;
         }
         enemyDeck.Clear();
         playerDeck.Clear();
-        return (enemyPoint, playerPoint);
+        return Tuple.Create(enemyPoint, playerPoint);
     }
 
     public void ResetDeck() //덱을 다시 모든 카드가 있는 상태로 초기화
