@@ -4,7 +4,7 @@ namespace Kmk
     {
         public enum CardShape
         {
-            Club, Diamond, Heart, Spade
+            Spade, Club, Diamond, Heart
         }
 
     }
