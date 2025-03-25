@@ -1,3 +1,5 @@
+using Bmc;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -30,8 +32,26 @@ public class GameManager : MonoBehaviour
         Debug.Log("게임 매니저 생성");
     }
 
-    public void Test()
+    // 플레이어 및 적 상태에 따른 상황 판단
+    public void CheckState()
     {
-        Debug.Log("테스트");
+        if(_isPlayerTurn)
+        {
+            if (_player.CurrentState == Define.PlayState.Draw)
+            {
+                UIManager.Instance.ShowAddCardBtn();
+            }
+        }
+        else
+        {
+            if(_enemy.CurrentState == Define.PlayState.Draw)
+            {
+                _enemy.Play();  // 카드 뽑기
+            }
+            else if(_enemy.CurrentState == Define.PlayState.Check)
+            {
+                _enemy.ChooseDecision();    // Check일 때 뭐 할지 결정
+            }
+        }
     }
 }
