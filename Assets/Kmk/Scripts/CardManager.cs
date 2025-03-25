@@ -105,6 +105,8 @@ public class CardManager : MonoBehaviour
         }
         enemyDeck.Clear();
         playerDeck.Clear();
+        GameManager.Instance.Enemy.ChooseDecision(enemyPoint);
+        UIManager.Instance.ShowCheckBtn();
         return Tuple.Create(enemyPoint, playerPoint);
     }
 

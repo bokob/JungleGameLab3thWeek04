@@ -10,7 +10,9 @@ public class GameManager : MonoBehaviour
     public bool IsPlayerTurn { get; set; }
     bool _isPlayerTurn = false;
     Player _player;
+    public Player Player=> _player;
     Enemy _enemy;
+    public Enemy Enemy => _enemy;
 
     void Awake()
     {
@@ -50,7 +52,7 @@ public class GameManager : MonoBehaviour
             }
             else if(_enemy.CurrentState == Define.PlayState.Check)
             {
-                _enemy.ChooseDecision();    // Check일 때 뭐 할지 결정
+                CardManager.Instance.CalculatePoint();    // Check일 때 뭐 할지 결정
             }
         }
     }

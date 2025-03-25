@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     Define.PlayState _currentState;
 
     // Check일 때 뭐 할지 결정
-    public void ChooseDecision()
+    public void ChooseDecision(int enemyPoint)
     {
     }
 
