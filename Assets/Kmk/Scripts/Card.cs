@@ -1,5 +1,5 @@
 using UnityEngine;
-using Kmk;
+using Bmc;
 public class Card : MonoBehaviour
 {
     [SerializeField] int _number;
