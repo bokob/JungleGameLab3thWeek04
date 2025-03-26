@@ -6,7 +6,7 @@ public class UI_UsedCardCanvas : MonoBehaviour
 {
     [SerializeField]
     TextMeshProUGUI[] _usedTexts;
-    Dictionary<int, int> _usedCountDict; // 0: ace, ..., 9: 10, 10: jack, 11: queen, 12: king
+    Dictionary<int, int> _usedCountDict = new Dictionary<int, int>(); // 0: ace, ..., 9: 10, 10: jack, 11: queen, 12: king
 
     void Start()
     {

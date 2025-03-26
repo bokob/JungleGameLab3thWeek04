@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
     #endregion
 
     UI_UsedCardCanvas _uiUsedCardCanvas;
-
+    public UI_UsedCardCanvas UIUsedCardCanvas => _uiUsedCardCanvas;
     void Awake()
     {
         if (_instance == null)
@@ -196,7 +196,6 @@ public class UIManager : MonoBehaviour
         //points.item2 = 플레이어 점수
         Debug.Log(points.Item1 + " , " + points.Item2);
         _guessResultCanvas.enabled = true;
-        //결과에 따라 약 1초 뒤 Revolover.Shoot 하면 됨
     }
     #endregion
 

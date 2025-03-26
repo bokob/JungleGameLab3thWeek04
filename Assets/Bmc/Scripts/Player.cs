@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Revolver _revolver;
-    bool _isLive;
+    Revolver _revolver;
+    public Revolver Revolver => _revolver;
     Define.PlayState _currentState;
 }

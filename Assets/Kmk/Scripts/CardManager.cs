@@ -77,6 +77,8 @@ public class CardManager : MonoBehaviour
         }
         _playerDeck.Clear();
         DiscardCards();
+        UIManager.Instance.UIUsedCardCanvas.UpdateUsedCardUI();
+        UIManager.Instance.UIUsedCardCanvas.DebugDict();
         if (_deck.Count < 4) //덱에 남은 카드가 3장 이하일 시 덱 초기화
         {
             ResetDeck();

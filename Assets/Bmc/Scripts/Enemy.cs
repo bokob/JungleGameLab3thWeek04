@@ -8,8 +8,8 @@ public class Enemy : MonoBehaviour
 
     public const int blackJack = 21;
 
-    // Revolver _revolver;
-    bool _isLive;
+    Revolver _revolver;
+    public Revolver Revolver => _revolver;
     Define.PlayState _currentState;
 
     // up, spot, down일 때 뭐 할지 결정 (일단 에이스는 1점으로 계산)
@@ -22,11 +22,11 @@ public class Enemy : MonoBehaviour
         // 두 정보에서 평균값 산정
         int cnt = deck.Count + playerDeck.Count;
         int point = 0;
-        foreach(Card card in deck)
+        foreach (Card card in deck)
         {
             point += card.Number;
         }
-        foreach(Card card in playerDeck)
+        foreach (Card card in playerDeck)
         {
             point += card.Number;
         }
@@ -34,11 +34,11 @@ public class Enemy : MonoBehaviour
         // 플레이어의 패를 평균값으로 가정하고 21보다 큰 지, 작은 지에 따라서 판단
         // up, spot, down
         int avg = point / cnt; // 버림
-        if(avg > blackJack) // up
+        if (avg > blackJack) // up
         {
             //GameManager.Instance.EnemyDecision = Define.EnemyDecision.Up;
         }
-        else if(avg < blackJack) // down
+        else if (avg < blackJack) // down
         {
             //GameManager.Instance.EnemyDecision = Define.EnemyDecision.Down;
         }

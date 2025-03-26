@@ -79,9 +79,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-    #region 게임시작/종료
-
     public void StartGame()
     {
         Debug.Log("startGame");
@@ -102,5 +99,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    #endregion
+    public void Shoot(bool playerWin, bool enemyWin)
+    {
+        if (!playerWin)
+        {
+            _player.Revolver.Shoot();
+        }
+        if (!enemyWin)
+        {
+            _enemy.Revolver.Shoot();
+        }
+    }
 }
