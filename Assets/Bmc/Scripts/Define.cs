@@ -14,5 +14,10 @@ namespace Bmc
         {
             Number, Jack, Queen, King
         }
+
+        public enum Decision
+        {
+            Up, BlackJack, Down
+        }
     }
 }

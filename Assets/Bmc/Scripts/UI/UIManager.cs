@@ -2,7 +2,8 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Bmc;
+using System;
 public class UIManager : MonoBehaviour
 {
     static UIManager _instance;
@@ -111,13 +112,18 @@ public class UIManager : MonoBehaviour
     // 카드 뽑기
     public void DrawCard()
     {
-        Debug.Log("카드 뽑기");
+        CardManager.Instance.Dealing();
     }
 
     // 카드 뽑기 멈춤
     public void StopDrawCard()
     {
         Debug.Log("카드 뽑기 멈춤");
+        ToggleDraw();
+        GameManager.Instance.Player.CurrentState = Define.PlayState.Guess;
+        GameManager.Instance.Enemy.CurrentState = Define.PlayState.Guess;
+        GameManager.Instance.IsPlayerTurn = false;
+        GameManager.Instance.CheckState();
         ToggleGuessText();
     }
     #endregion
@@ -145,15 +151,20 @@ public class UIManager : MonoBehaviour
         {
             case 1:
                 Debug.Log("up");
+                GameManager.Instance.PlayerDecision = Define.Decision.Up;
                 break;
             case 2:
                 Debug.Log("spot");
+                GameManager.Instance.PlayerDecision = Define.Decision.BlackJack;
                 break;
             case 3:
                 Debug.Log("down");
+                GameManager.Instance.PlayerDecision = Define.Decision.Down;
                 break;
         }
         DisableAllCanvas();
+        GameManager.Instance.Enemy.CurrentState = Define.PlayState.None;
+        GameManager.Instance.Player.CurrentState = Define.PlayState.None;
         ToggleGuessResult();
     }
     #endregion
@@ -163,6 +174,11 @@ public class UIManager : MonoBehaviour
     public void ToggleGuessResult()
     {
         DisableAllCanvas();
+        Tuple<int, int> points = CardManager.Instance.CalculatePoint();
+        //디시전 표시
+        //points.item1 = 적 점수
+        //points.item2 = 플레이어 점수
+        Debug.Log(points.Item1 + " , " + points.Item2);
         _guessResultCanvas.enabled = true;
     }
     #endregion
