@@ -52,11 +52,20 @@ public class GameManager : MonoBehaviour
 
     public void NewRound()
     {
-        _enemy.CurrentState = Define.PlayState.None;
-        _player.CurrentState = Define.PlayState.None;
-        UIManager.Instance.ToggleMain();
-        IsPlayerTurn = false;
-        CardManager.Instance.FirstDealing();
+        if (_enemy.CurrentState != Define.PlayState.Death && _player.CurrentState != Define.PlayState.Death)
+        {
+            
+            _enemy.CurrentState = Define.PlayState.None;
+            _player.CurrentState = Define.PlayState.None;
+            UIManager.Instance.ToggleMain();
+            IsPlayerTurn = false;
+            CardManager.Instance.FirstDealing();
+            Debug.Log("성공함");
+        }
+        else
+        {
+            Debug.Log("실패함");
+        }
     }
 
     // 플레이어 및 적 상태에 따른 상황 판단
@@ -103,20 +112,28 @@ public class GameManager : MonoBehaviour
 
     public void Shoot(bool playerWin, bool enemyWin)
     {
+        StartCoroutine(Call());
+        Debug.Log("뉴라운드 호출");
         UIManager.Instance.DisableAllCanvas();
         if (!playerWin)
         {
             StartCoroutine(_player.Revolver.Shoot());
+            Debug.Log("플레이어 슛 호출");
         }
+
         if (!enemyWin)
         {
-
             StartCoroutine(_enemy.Revolver.Shoot());
+            Debug.Log("에너미 슛 호출");
         }
-        if (playerWin && enemyWin)
-        {
-            Invoke("NewRound", 2f);
-        }
-        
+
+
+    }
+
+    IEnumerator Call()
+    {
+        yield return new WaitForSeconds(4.0f);
+        Debug.Log("뉴라운드 코루틴 호출");
+        NewRound();
     }
 }

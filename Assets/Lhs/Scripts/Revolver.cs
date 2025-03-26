@@ -75,12 +75,6 @@ public class Revolver : MonoBehaviour
         {
             Debug.Log("살았다 슈발 ㅠㅠ + 총알 추가");
             ammo += 1;
-            if (_owner.gameObject.GetComponent<Player>() != null)
-            {
-               
-                yield return new WaitForSeconds(2f);
-                GameManager.Instance.NewRound();
-            }
         }
 
     }
@@ -95,9 +89,9 @@ public class Revolver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        /*if (Input.GetKeyDown(KeyCode.Space))
         {
             StartCoroutine(Shoot()); // 리볼버 땡기기 로직 호출(임시)
-        }
+        }*/
     }
 }
