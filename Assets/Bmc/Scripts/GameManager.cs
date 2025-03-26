@@ -1,19 +1,20 @@
 using Bmc;
+using System;
 using System.Security.Cryptography;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance => _instance;
-
+    public Player Player => _player;
+    public Enemy Enemy => _enemy;
 
     static GameManager _instance;
     public bool IsPlayerTurn { get; set; }
-    bool _isPlayerTurn = false;
     Player _player;
-    public Player Player => _player;
     Enemy _enemy;
-    public Enemy Enemy => _enemy;
+    public Define.Decision EnemyDecision { get; set; }
+    public Define.Decision PlayerDecision { get; set; }
 
     void Awake()
     {
@@ -27,20 +28,26 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            CardManager.Instance.FirstDealing();
+        }
     }
 
     public void Init()
     {
         Debug.Log("게임 매니저 생성");
-
+        IsPlayerTurn = false;
         _player = FindAnyObjectByType<Player>(); // 테스트 코드
+        _enemy = FindAnyObjectByType<Enemy>(); // 테스트 코드
+        _player.CurrentState = Define.PlayState.None;
+        _enemy.CurrentState = Define.PlayState.None;
     }
 
     // 플레이어 및 적 상태에 따른 상황 판단
     public void CheckState()
     {
-        if (_isPlayerTurn)
+        if (IsPlayerTurn)
         {
             if (_player.CurrentState == Define.PlayState.Draw)
             {
@@ -51,11 +58,11 @@ public class GameManager : MonoBehaviour
         {
             if (_enemy.CurrentState == Define.PlayState.Draw)
             {
-                _enemy.Play();  // 카드 뽑기
+                StartCoroutine(_enemy.Play());  // 카드 뽑기
             }
-            else if(_enemy.CurrentState == Define.PlayState.Guess)
+            else if (_enemy.CurrentState == Define.PlayState.Guess)
             {
-                CardManager.Instance.CalculatePoint();    // Check일 때 뭐 할지 결정
+                Enemy.ChooseDecision();
             }
         }
     }
