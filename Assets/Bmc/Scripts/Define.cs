@@ -9,5 +9,10 @@ namespace Bmc
             Guess,
             Death
         }
+
+        public enum Face
+        {
+            Number, Jack, Queen, King
+        }
     }
 }

@@ -20,7 +20,8 @@ public class CardManager : MonoBehaviour
     [SerializeField] float _cardSpace = 0.05f;
     bool _candDeal = true;
     //테스트용
-    [SerializeField] Transform _playerPos, _enemyPos;
+    [SerializeField] Transform _playerCardPos;
+    [SerializeField] Transform _enemyCardPos;
 
     private void Awake()
     {
@@ -148,8 +149,8 @@ public class CardManager : MonoBehaviour
         _cardsOnTable.Add(dealtCard);
         if (isPlayerCard)
         {
-            dealtCard.transform.SetParent(_playerPos); //플레이어 카드 위치로 카드 이동
-            Vector3 targetPosition = _playerPos.position + new Vector3(0f, 0.0002f * (_playerPos.childCount - 1), -_cardSpace * (_playerPos.childCount - 1));
+            dealtCard.transform.SetParent(_playerCardPos); //플레이어 카드 위치로 카드 이동
+            Vector3 targetPosition = _playerCardPos.position + new Vector3(0f, 0.0002f * (_playerCardPos.childCount - 1), -_cardSpace * (_playerCardPos.childCount - 1));
             while (Vector3.Distance(dealtCard.transform.position, targetPosition) > 0.1f)
             {
                 dealtCard.transform.position = Vector3.MoveTowards(dealtCard.transform.position, targetPosition, _cardMoveSpeed * Time.deltaTime);
@@ -160,8 +161,8 @@ public class CardManager : MonoBehaviour
         }
         else
         {
-            dealtCard.transform.SetParent(_enemyPos);
-            Vector3 targetPosition = _enemyPos.position + new Vector3(0f, 0.0002f * (_enemyPos.childCount - 1), _cardSpace * (_enemyPos.childCount - 1));
+            dealtCard.transform.SetParent(_enemyCardPos);
+            Vector3 targetPosition = _enemyCardPos.position + new Vector3(0f, 0.0002f * (_enemyCardPos.childCount - 1), _cardSpace * (_enemyCardPos.childCount - 1));
             while (Vector3.Distance(dealtCard.transform.position, targetPosition) > 0.1f)
             {
                 dealtCard.transform.position = Vector3.MoveTowards(dealtCard.transform.position, targetPosition, _cardMoveSpeed * Time.deltaTime);
