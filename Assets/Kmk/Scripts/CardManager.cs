@@ -52,7 +52,15 @@ public class CardManager : MonoBehaviour
     }
     public void FirstDealing() //매턴 시작마다 상대와 플레이어에게 2장식 카드 제공
     {
+        foreach(Card card in _enemyDeck)
+        {
+            _usedDeck.Add(card);
+        }
         _enemyDeck.Clear();
+        foreach (Card card in _playerDeck)
+        {
+            _usedDeck.Add(card);
+        }
         _playerDeck.Clear();
         DiscardCards();
         if (_deck.Count < 4) //덱에 남은 카드가 3장 이하일 시 덱 초기화
@@ -64,12 +72,10 @@ public class CardManager : MonoBehaviour
             int deckIndex = UnityEngine.Random.Range(0, _deck.Count);
             SpawnCardObjects(false, _deck[deckIndex].gameObject);
             _enemyDeck.Add(_deck[deckIndex]); //덱에서 랜덤하게 카드를 뽑아 상대 덱에 넣기
-            _usedDeck.Add(_deck[deckIndex]); //뽑힌 카드를 사용된 카드 리스트에 넣기
             _deck.RemoveAt(deckIndex); //뽑힌 카드를 덱에서 제거
             deckIndex = UnityEngine.Random.Range(0, _deck.Count); //위 상대 딜링과 동일
             SpawnCardObjects(true, _deck[deckIndex].gameObject);
             _playerDeck.Add(_deck[deckIndex]);
-            _usedDeck.Add(_deck[deckIndex]);
             _deck.RemoveAt(deckIndex);
         }
         //GameManager.Instance.CheckState();
@@ -88,7 +94,6 @@ public class CardManager : MonoBehaviour
             int deckIndex = UnityEngine.Random.Range(0, _deck.Count);
             _playerDeck.Add(_deck[deckIndex]);
             SpawnCardObjects(true, _deck[deckIndex].gameObject);
-            _usedDeck.Add(_deck[deckIndex]);
             _deck.RemoveAt(deckIndex);
         }
         else //현재 상대 턴일 시
@@ -96,7 +101,6 @@ public class CardManager : MonoBehaviour
             int deckIndex = UnityEngine.Random.Range(0, _deck.Count);
             _enemyDeck.Add(_deck[deckIndex]);
             SpawnCardObjects(false, _deck[deckIndex].gameObject);
-            _usedDeck.Add(_deck[deckIndex]);
             _deck.RemoveAt(deckIndex);
         }
     }
@@ -136,14 +140,14 @@ public class CardManager : MonoBehaviour
         {
             dealtCard.transform.SetParent(_playerPos);
             Debug.Log(_playerPos.position + new Vector3(0.5f * (_playerPos.childCount - 1), 0f, 0f));
-            dealtCard.transform.position = _playerPos.position + new Vector3(0.5f * (_playerPos.childCount-1), 0f, 0f);
+            dealtCard.transform.position = _playerPos.position + new Vector3(0.5f * (_playerPos.childCount - 1), 0f, 0f);
             dealtCard.transform.rotation = Quaternion.Euler(-90f, 0, 0);
         }
         else
         {
             dealtCard.transform.SetParent(_enemyPos);
             Debug.Log(_enemyPos.position + new Vector3(0.5f * (_enemyPos.childCount - 1), 0f, 0f));
-            dealtCard.transform.position = _enemyPos.position + new Vector3(0.5f * (_enemyPos.childCount-1), 0f, 0f);
+            dealtCard.transform.position = _enemyPos.position + new Vector3(0.5f * (_enemyPos.childCount - 1), 0f, 0f);
             dealtCard.transform.rotation = Quaternion.Euler(90f, 0, 0);
         }
     }
