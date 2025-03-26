@@ -10,9 +10,11 @@ namespace Bmc
             Death
         }
 
-        public enum Face
+        public enum CardType
         {
-            Number, Jack, Queen, King
+            Ace = 0,
+            Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten,
+            Jack, Queen, King
         }
 
         public enum Decision

@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviour
     public bool IsPlayerTurn { get; set; }
     Player _player;
     Enemy _enemy;
-    public Define.Decision EnemyDecision { get; set; }
-    public Define.Decision PlayerDecision { get; set; }
+    public Define.Decision EnemyGuess { get; set; }
+    public Define.Decision PlayerGuess { get; set; }
 
     void Awake()
     {

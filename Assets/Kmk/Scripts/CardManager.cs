@@ -19,7 +19,7 @@ public class CardManager : MonoBehaviour
     List<Card> _enemyDeck = new List<Card>();
     List<Card> _usedDeck = new List<Card>();
     List<GameObject> _cardsOnTable = new List<GameObject>();
-    int _limit = 8;
+    int _limit = 6;
 
     [SerializeField] float _cardMoveSpeed = 5;
     [SerializeField] float _cardSpace = 0.05f;
@@ -112,7 +112,7 @@ public class CardManager : MonoBehaviour
             StartCoroutine(SpawnCardObjects(true, _deck[deckIndex].gameObject));
             _deck.RemoveAt(deckIndex);
         }
-        else if(_enemyDeck.Count < _limit)//현재 상대 턴일 시
+        else if(!GameManager.Instance.IsPlayerTurn&& _enemyDeck.Count < _limit)//현재 상대 턴일 시
         {
             int deckIndex = UnityEngine.Random.Range(0, _deck.Count);
             _enemyDeck.Add(_deck[deckIndex]);
@@ -121,7 +121,7 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    public Tuple<int, int> CalculatePoint()
+    public Tuple<int, int> CalculatePoint() // Item1: 적, Item2: 플레이어
     {
         int enemyPoint = 0;
         foreach (Card card in _enemyDeck)//상대 덱에 있는 카드의 값을 모두 계산
