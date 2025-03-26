@@ -5,8 +5,13 @@ public class SoundManager : MonoBehaviour
     static SoundManager _instance;
     public static SoundManager Instance => _instance;
 
-    AudioSource _bgmSource;
-    AudioSource _effectSource;
+    [Header("Source")]
+    [SerializeField] AudioSource _bgmSource;
+    [SerializeField] AudioSource _effectSource;
+
+    [Header("Clip")]
+    [SerializeField] AudioClip _bgm;
+    [SerializeField] AudioClip[] _effects;
 
     void Awake()
     {
@@ -19,18 +24,43 @@ public class SoundManager : MonoBehaviour
 
     void Init()
     {
+        _bgmSource = transform.GetChild(0).GetComponent<AudioSource>();
+        _effectSource = transform.GetChild(1).GetComponent<AudioSource>();
 
+        _bgmSource.playOnAwake = true;
+        _bgmSource.loop = true;
+        _bgmSource.volume = 1f;
+        _bgmSource.clip = _bgm;
+
+        PlayBGM();
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            PlayEffect("OpenCylinder");
+            Debug.Log("효과음 재생");
+        }
     }
 
     // 배경음 재생
     void PlayBGM()
     {
-
+        _bgmSource.Play();
     }
 
     // 효과음 재생
-    void PlayEffect()
+    void PlayEffect(string effectName)
     {
-
+        for(int i = 0; i < _effects.Length; i++)
+        {
+            if (_effects[i].name == effectName)
+            {
+                _effectSource.clip = _effects[i];
+                _effectSource.PlayOneShot(_effectSource.clip);
+                break;
+            }
+        }
     }
 }

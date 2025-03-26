@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
+using Bmc;
 
 public class UI_UsedCardCanvas : MonoBehaviour
 {
@@ -38,9 +39,10 @@ public class UI_UsedCardCanvas : MonoBehaviour
             _usedCountDict[idx]++;
         }
 
-        for(int i=0; i < _usedTexts.Length; i++)
+        for(int idx=0; idx < _usedTexts.Length; idx++)
         {
-            _usedTexts[i].text = _usedCountDict[i].ToString();
+            string cardName = ((Define.CardType)idx).ToString();
+            _usedTexts[idx].text = $"{cardName} \n {_usedCountDict[idx]}";
         }
     }
 }

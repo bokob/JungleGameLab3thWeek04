@@ -80,6 +80,8 @@ public class UIManager : MonoBehaviour
 
         _uiUsedCardCanvas = FindAnyObjectByType<UI_UsedCardCanvas>();
         _usedCardCanvas = _uiUsedCardCanvas.gameObject.GetComponent<Canvas>();
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void DescribeAction()
