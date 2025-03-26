@@ -78,7 +78,7 @@ public class CardManager : MonoBehaviour
         for (int i = 0; i < 2; i++)
         {
             int deckIndex = UnityEngine.Random.Range(0, _deck.Count);
-            StartCoroutine(SpawnCardObjects(false, _deck[deckIndex].gameObject));
+            StartCoroutine(SpawnCardObjects(false, _deck[deckIndex].gameObject));  
             _enemyDeck.Add(_deck[deckIndex]); //덱에서 랜덤하게 카드를 뽑아 상대 덱에 넣기
             _deck.RemoveAt(deckIndex); //뽑힌 카드를 덱에서 제거
             deckIndex = UnityEngine.Random.Range(0, _deck.Count); //위 상대 딜링과 동일
