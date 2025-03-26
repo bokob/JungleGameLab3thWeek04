@@ -53,11 +53,7 @@ public class GameManager : MonoBehaviour
             {
                 _enemy.Play();  // 카드 뽑기
             }
-<<<<<<< HEAD
             else if(_enemy.CurrentState == Define.PlayState.Guess)
-=======
-            else if (_enemy.CurrentState == Define.PlayState.Check)
->>>>>>> main
             {
                 CardManager.Instance.CalculatePoint();    // Check일 때 뭐 할지 결정
             }
