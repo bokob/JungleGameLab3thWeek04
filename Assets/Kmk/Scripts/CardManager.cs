@@ -9,6 +9,11 @@ public class CardManager : MonoBehaviour
 
     static CardManager _instance;
 
+    public List<Card> Deck => _deck;
+    public List<Card> PlayerDeck => _playerDeck;
+    public List<Card> EnemyDeck => _enemyDeck;
+    public List<Card> UsedDeck => _usedDeck;
+
     List<Card> _deck = new List<Card>();
     List<Card> _playerDeck = new List<Card>();
     List<Card> _enemyDeck = new List<Card>();
@@ -127,7 +132,7 @@ public class CardManager : MonoBehaviour
         {
             playerPoint += card.Number;
         }
-        GameManager.Instance.Enemy.ChooseDecision(enemyPoint);
+        //GameManager.Instance.Enemy.ChooseDecision(enemyPoint);
         //UIManager.Instance.ShowDraw();
         return Tuple.Create(enemyPoint, playerPoint);
     }
