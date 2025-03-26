@@ -20,33 +20,33 @@ public class CardManager : MonoBehaviour
         _instance = this;
         Init();
     }
-    //private void Start()
-    //{
-    //    FirstDealing();
-    //}
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.T))
-    //    {
-    //        GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn;
-    //    }
+    private void Start()
+    {
+        FirstDealing();
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn;
+        }
 
-    //    if (Input.GetKeyDown(KeyCode.Space))
-    //    {
-    //        Dealing();
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.R))
-    //    {
-    //        FirstDealing();
-    //    }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Dealing();
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            FirstDealing();
+        }
 
-    //    if (Input.GetKeyDown(KeyCode.C))
-    //    {
-    //        Tuple<int, int> test = CalculatePoint();
-    //        Debug.Log($"Enemy Point {test.Item1} Player Point {test.Item2}");
-    //    }
-    //}
-    public void Init() //초기화 시 덱에 모든 카드 넣기
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Tuple<int, int> test = CalculatePoint();
+            Debug.Log($"Enemy Point {test.Item1} Player Point {test.Item2}");
+        }
+    }
+    void Init() //초기화 시 덱에 모든 카드 넣기
     {
         ResetDeck();
     }
@@ -72,7 +72,7 @@ public class CardManager : MonoBehaviour
             _usedDeck.Add(_deck[deckIndex]);
             _deck.RemoveAt(deckIndex);
         }
-        GameManager.Instance.CheckState();
+        //GameManager.Instance.CheckState();
     }
 
     public void Dealing() //덱에서 한 장을 뽑아 플레이어 또는 상대 덱에 넣기
@@ -80,7 +80,7 @@ public class CardManager : MonoBehaviour
         if (_deck.Count == 0)
         {
             GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn; //덱에 남은 카드가 없을 시 턴 종료
-            GameManager.Instance.CheckState(); //턴 종료
+            //GameManager.Instance.CheckState(); //턴 종료
             return;
         }
         if (GameManager.Instance.IsPlayerTurn) //현재 플레이어 턴일시
@@ -114,7 +114,7 @@ public class CardManager : MonoBehaviour
             playerPoint += card.Number;
         }
         GameManager.Instance.Enemy.ChooseDecision(enemyPoint);
-        UIManager.Instance.ShowDraw();
+        //UIManager.Instance.ShowDraw();
         return Tuple.Create(enemyPoint, playerPoint);
     }
 
@@ -135,13 +135,15 @@ public class CardManager : MonoBehaviour
         if (isPlayerCard)
         {
             dealtCard.transform.SetParent(_playerPos);
-            dealtCard.transform.position = _playerPos.position;
+            Debug.Log(_playerPos.position + new Vector3(0.5f * (_playerPos.childCount - 1), 0f, 0f));
+            dealtCard.transform.position = _playerPos.position + new Vector3(0.5f * (_playerPos.childCount-1), 0f, 0f);
             dealtCard.transform.rotation = Quaternion.Euler(-90f, 0, 0);
         }
         else
         {
             dealtCard.transform.SetParent(_enemyPos);
-            dealtCard.transform.position = _enemyPos.position;
+            Debug.Log(_enemyPos.position + new Vector3(0.5f * (_enemyPos.childCount - 1), 0f, 0f));
+            dealtCard.transform.position = _enemyPos.position + new Vector3(0.5f * (_enemyPos.childCount-1), 0f, 0f);
             dealtCard.transform.rotation = Quaternion.Euler(90f, 0, 0);
         }
     }
