@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         {
             if (_player.CurrentState == Define.PlayState.Draw)
             {
-                UIManager.Instance.ShowAddCardBtn();
+                UIManager.Instance.ShowDraw();
             }
         }
         else
