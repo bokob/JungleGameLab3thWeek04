@@ -1,5 +1,6 @@
 using Bmc;
 using System;
+using System.Collections;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
     {
         _enemy.CurrentState = Define.PlayState.None;
         _player.CurrentState = Define.PlayState.None;
+        UIManager.Instance.ToggleMain();
         IsPlayerTurn = false;
         CardManager.Instance.FirstDealing();
     }
@@ -99,15 +101,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void Shoot(bool playerWin, bool enemyWin)
+    public IEnumerator Shoot(bool playerWin, bool enemyWin)
     {
+        yield return new WaitForSeconds(2f);
+        UIManager.Instance.DisableAllCanvas();
         if (!playerWin)
         {
+            _player.CurrentState = Define.PlayState.Death;
             _player.Revolver.Shoot();
         }
         if (!enemyWin)
         {
+            _enemy.CurrentState = Define.PlayState.Death;
             _enemy.Revolver.Shoot();
         }
+        Invoke("NewRound", 2f);
     }
 }

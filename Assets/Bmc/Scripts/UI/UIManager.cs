@@ -195,7 +195,7 @@ public class UIManager : MonoBehaviour
         //points.item1 = 적 점수
         //points.item2 = 플레이어 점수
         Debug.Log(points.Item1 + " , " + points.Item2);
-        _guessResultCanvas.enabled = true;
+        ToggleGameResult();
     }
     #endregion
 
@@ -214,6 +214,18 @@ public class UIManager : MonoBehaviour
     {
         DisableAllCanvas();
         _guessResultCanvas.enabled = !_guessResultCanvas.enabled;
+    }
+    #endregion
+
+    #region 게임 클리어/게임오버
+    public void ToggleGameClear()
+    {
+        _gameClearCanvas.enabled = !_gameClearCanvas.enabled;
+    }
+
+    public void ToggleGameOver()
+    {
+        _gameOverCanvas.enabled = !_gameOverCanvas.enabled;
     }
     #endregion
 }

@@ -102,7 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _number: 7
   _isAce: 0
-  _face: 6
+  _cardType: 6
 --- !u!64 &6124011687132895994
 MeshCollider:
   m_ObjectHideFlags: 0

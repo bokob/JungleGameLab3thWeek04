@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Bmc;
+using NUnit.Framework.Constraints;
 public class Revolver : MonoBehaviour
 {
     [SerializeField] Animator _animator; // 애니메이션 제어
@@ -9,7 +10,7 @@ public class Revolver : MonoBehaviour
     private ParticleSystem _muzzleFlashEffect; // Muzzle Flash 파티클 (자식 오브젝트에서 찾음)
 
     public int ammo; // 총알 개수 제어
-    
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -47,15 +48,23 @@ public class Revolver : MonoBehaviour
                 _animator.SetTrigger("Die"); // 살자 애니메이션 실행
                 StartCoroutine(Raggdoll_Active());
                 _Camera.GetComponent<CameraController>().enabled = false;
-                
+                yield return new WaitForSeconds(1f);
+                GameManager.Instance.GamePhase = Define.GamePhase.End;
+                UIManager.Instance.ToggleGameOver();
+
             }
-            else if(_owner.gameObject.name == "Enemy")
+            else if (_owner.gameObject.name == "Enemy")
             {
                 Debug.Log("에너미 사망");
                 //_owner.GetComponent<Enemy>().CurrentState = Define.PlayState.Death;
                 _animator.SetTrigger("Die"); // 살자 애니메이션 실행
                 StartCoroutine(Raggdoll_Active());
-
+                yield return new WaitForSeconds(1f);
+                GameManager.Instance.GamePhase = Define.GamePhase.End;
+                if (GameManager.Instance.Player.CurrentState != Define.PlayState.Death)
+                {
+                    UIManager.Instance.ToggleGameClear();
+                }
             }
 
 
@@ -65,7 +74,9 @@ public class Revolver : MonoBehaviour
         {
             Debug.Log("살았다 슈발 ㅠㅠ + 총알 추가");
             ammo += 1;
-        } 
+            yield return new WaitForSeconds(2f);
+            GameManager.Instance.NewRound();
+        }
 
     }
 
