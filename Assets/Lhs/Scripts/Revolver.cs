@@ -45,6 +45,7 @@ public class Revolver : MonoBehaviour
             _muzzleFlashEffect.Play(); // + 파티클 효과 넣어서 껏다켯다
             if (_owner.gameObject.name == "Player")
             {
+                SoundManager.Instance.PlayEffect("Shoot");
                 Debug.Log("플레이어 사망");
                 _owner.GetComponent<Player>().CurrentState = Define.PlayState.Death;
                 _animator.SetTrigger("Die"); // 살자 애니메이션 실행
@@ -58,6 +59,7 @@ public class Revolver : MonoBehaviour
             }
             else if (_owner.gameObject.name == "Enemy")
             {
+                SoundManager.Instance.PlayEffect("Shoot");
                 Debug.Log("에너미 사망");
                 _owner.GetComponent<Enemy>().CurrentState = Define.PlayState.Death;
                 _animator.SetTrigger("Die"); // 살자 애니메이션 실행
@@ -76,6 +78,7 @@ public class Revolver : MonoBehaviour
         }
         else
         {
+            SoundManager.Instance.PlayEffect("FailShoot");
             Debug.Log("살았다 슈발 ㅠㅠ + 총알 추가");
             ammo += 1;
             UIManager.Instance.DisableAllCanvas();
@@ -83,6 +86,7 @@ public class Revolver : MonoBehaviour
             {
                 if (_owner.name == "Player")
                 {
+                    SoundManager.Instance.PlayEffect("AfterShootLive2");
                     StartCoroutine(UIManager.Instance.StartPlayerReload());
                 }
                 else

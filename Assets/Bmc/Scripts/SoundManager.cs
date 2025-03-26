@@ -29,7 +29,7 @@ public class SoundManager : MonoBehaviour
 
         _bgmSource.playOnAwake = true;
         _bgmSource.loop = true;
-        _bgmSource.volume = 1f;
+        _bgmSource.volume = 0.05f;
         _bgmSource.clip = _bgm;
 
         PlayBGM();
@@ -45,13 +45,13 @@ public class SoundManager : MonoBehaviour
     }
 
     // 배경음 재생
-    void PlayBGM()
+    public void PlayBGM()
     {
         _bgmSource.Play();
     }
 
     // 효과음 재생
-    void PlayEffect(string effectName)
+    public void PlayEffect(string effectName)
     {
         for(int i = 0; i < _effects.Length; i++)
         {

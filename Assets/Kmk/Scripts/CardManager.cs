@@ -85,13 +85,21 @@ public class CardManager : MonoBehaviour
         }
         for (int i = 0; i < 2; i++)
         {
+
+            // 에너미 드로우
             int deckIndex = UnityEngine.Random.Range(0, _deck.Count);
             StartCoroutine(SpawnCardObjects(false, _deck[deckIndex].gameObject));  
             _enemyDeck.Add(_deck[deckIndex]); //덱에서 랜덤하게 카드를 뽑아 상대 덱에 넣기
+            SoundManager.Instance.PlayEffect("Card_Sound");
+
             _deck.RemoveAt(deckIndex); //뽑힌 카드를 덱에서 제거
+
+            // 플레이어 드로우
             deckIndex = UnityEngine.Random.Range(0, _deck.Count); //위 상대 딜링과 동일
             StartCoroutine(SpawnCardObjects(true, _deck[deckIndex].gameObject));
             _playerDeck.Add(_deck[deckIndex]);
+            SoundManager.Instance.PlayEffect("Card_Sound");
+
             _deck.RemoveAt(deckIndex);
         }
         GameManager.Instance.Enemy.CurrentState = Define.PlayState.Draw; //적이 플레이를 할 차례이기에 상태를 Draw로 변경
@@ -111,6 +119,8 @@ public class CardManager : MonoBehaviour
         {
             int deckIndex = UnityEngine.Random.Range(0, _deck.Count);
             _playerDeck.Add(_deck[deckIndex]);
+            SoundManager.Instance.PlayEffect("Card_Sound");
+
             StartCoroutine(SpawnCardObjects(true, _deck[deckIndex].gameObject));
             _deck.RemoveAt(deckIndex);
         }
@@ -118,6 +128,8 @@ public class CardManager : MonoBehaviour
         {
             int deckIndex = UnityEngine.Random.Range(0, _deck.Count);
             _enemyDeck.Add(_deck[deckIndex]);
+            SoundManager.Instance.PlayEffect("Card_Sound");
+
             StartCoroutine(SpawnCardObjects(false, _deck[deckIndex].gameObject));
             _deck.RemoveAt(deckIndex);
         }
