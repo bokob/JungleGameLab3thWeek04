@@ -106,7 +106,7 @@ public class CardManager : MonoBehaviour
         enemyDeck.Clear();
         playerDeck.Clear();
         GameManager.Instance.Enemy.ChooseDecision(enemyPoint);
-        UIManager.Instance.ShowCheckBtn();
+        UIManager.Instance.ToggleGuessText();
         return Tuple.Create(enemyPoint, playerPoint);
     }
 
