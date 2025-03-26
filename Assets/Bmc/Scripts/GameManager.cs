@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-       
+
     }
 
     public void Init()
@@ -101,20 +101,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public IEnumerator Shoot(bool playerWin, bool enemyWin)
+    public void Shoot(bool playerWin, bool enemyWin)
     {
-        yield return new WaitForSeconds(2f);
         UIManager.Instance.DisableAllCanvas();
         if (!playerWin)
         {
-            _player.CurrentState = Define.PlayState.Death;
-            _player.Revolver.Shoot();
+            StartCoroutine(_player.Revolver.Shoot());
         }
         if (!enemyWin)
         {
-            _enemy.CurrentState = Define.PlayState.Death;
-            _enemy.Revolver.Shoot();
+
+            StartCoroutine(_enemy.Revolver.Shoot());
         }
-        Invoke("NewRound", 2f);
+        if (playerWin && enemyWin)
+        {
+            Invoke("NewRound", 2f);
+        }
+        
     }
 }

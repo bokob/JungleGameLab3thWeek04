@@ -15,4 +15,9 @@ public class Player : MonoBehaviour
     Revolver _revolver;
     public Revolver Revolver => _revolver;
     Define.PlayState _currentState;
+
+    private void Start()
+    {
+        _revolver = GetComponentInChildren<Revolver>();
+    }
 }

@@ -50,6 +50,6 @@ public class UI_CheckResultCanvas : MonoBehaviour
             _enemyGuessText.color = Color.green;
             enemyWin = true;
         }
-        StartCoroutine(GameManager.Instance.Shoot(playerWin, enemyWin));
+        GameManager.Instance.Shoot(playerWin, enemyWin);
     }
 }

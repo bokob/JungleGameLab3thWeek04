@@ -24,7 +24,7 @@ namespace Bmc
 
         public enum GamePhase
         {
-            Start, Play, End
+            Start, Play, Shooting, End
         }
     }
 }

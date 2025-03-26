@@ -12,6 +12,14 @@ public class Enemy : MonoBehaviour
     public Revolver Revolver => _revolver;
     Define.PlayState _currentState;
 
+    void Start()
+    {
+        _revolver = GetComponentInChildren<Revolver>();
+
+
+
+    }
+
     // up, spot, down일 때 뭐 할지 결정 (일단 에이스는 1점으로 계산)
     public void ChooseDecision()
     {

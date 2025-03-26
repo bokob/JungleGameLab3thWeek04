@@ -6,6 +6,7 @@ public class Revolver : MonoBehaviour
 {
     [SerializeField] Animator _animator; // 애니메이션 제어
     [SerializeField] GameObject _owner; // 리볼버의 주인 찾기
+    public GameObject Owner => _owner;
     [SerializeField] GameObject _Camera; // 캐릭터 카메라 찾기
     private ParticleSystem _muzzleFlashEffect; // Muzzle Flash 파티클 (자식 오브젝트에서 찾음)
 
@@ -44,7 +45,7 @@ public class Revolver : MonoBehaviour
             if (_owner.gameObject.name == "Player")
             {
                 Debug.Log("플레이어 사망");
-                //_owner.GetComponent<Player>().CurrentState = Define.PlayState.Death;
+                _owner.GetComponent<Player>().CurrentState = Define.PlayState.Death;
                 _animator.SetTrigger("Die"); // 살자 애니메이션 실행
                 StartCoroutine(Raggdoll_Active());
                 _Camera.GetComponent<CameraController>().enabled = false;
@@ -56,7 +57,7 @@ public class Revolver : MonoBehaviour
             else if (_owner.gameObject.name == "Enemy")
             {
                 Debug.Log("에너미 사망");
-                //_owner.GetComponent<Enemy>().CurrentState = Define.PlayState.Death;
+                _owner.GetComponent<Enemy>().CurrentState = Define.PlayState.Death;
                 _animator.SetTrigger("Die"); // 살자 애니메이션 실행
                 StartCoroutine(Raggdoll_Active());
                 yield return new WaitForSeconds(1f);
@@ -74,8 +75,12 @@ public class Revolver : MonoBehaviour
         {
             Debug.Log("살았다 슈발 ㅠㅠ + 총알 추가");
             ammo += 1;
-            yield return new WaitForSeconds(2f);
-            GameManager.Instance.NewRound();
+            if (_owner.gameObject.GetComponent<Player>() != null)
+            {
+               
+                yield return new WaitForSeconds(2f);
+                GameManager.Instance.NewRound();
+            }
         }
 
     }
