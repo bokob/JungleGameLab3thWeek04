@@ -5,19 +5,23 @@ using System.Collections;
 
 public class CardManager : MonoBehaviour
 {
+    public static CardManager Instance => _instance;
 
     static CardManager _instance;
-    public static CardManager Instance => _instance;
+
     List<Card> _deck = new List<Card>();
     List<Card> _playerDeck = new List<Card>();
     List<Card> _enemyDeck = new List<Card>();
     List<Card> _usedDeck = new List<Card>();
     List<GameObject> _cardsOnTable = new List<GameObject>();
+    int _limit = 8;
+
     [SerializeField] float _cardMoveSpeed = 5;
     [SerializeField] float _cardSpace = 0.05f;
+    bool _candDeal = true;
     //테스트용
     [SerializeField] Transform _playerPos, _enemyPos;
-    bool _candDeal = true;
+
     private void Awake()
     {
         _instance = this;
@@ -81,6 +85,7 @@ public class CardManager : MonoBehaviour
             _playerDeck.Add(_deck[deckIndex]);
             _deck.RemoveAt(deckIndex);
         }
+        //GameManager.Enemy.CurrentState = Define.PlayState.Draw; //적이 플레이를 할 차례이기에 상태를 Draw로 변경
         //GameManager.Instance.CheckState();
     }
 
@@ -93,14 +98,14 @@ public class CardManager : MonoBehaviour
             return;
         }
         if (!_candDeal) return;
-        if (GameManager.Instance.IsPlayerTurn) //현재 플레이어 턴일시
+        if (GameManager.Instance.IsPlayerTurn && _playerDeck.Count < _limit) //현재 플레이어 턴일시
         {
             int deckIndex = UnityEngine.Random.Range(0, _deck.Count);
             _playerDeck.Add(_deck[deckIndex]);
             StartCoroutine(SpawnCardObjects(true, _deck[deckIndex].gameObject));
             _deck.RemoveAt(deckIndex);
         }
-        else //현재 상대 턴일 시
+        else if(_enemyDeck.Count < _limit)//현재 상대 턴일 시
         {
             int deckIndex = UnityEngine.Random.Range(0, _deck.Count);
             _enemyDeck.Add(_deck[deckIndex]);
@@ -139,7 +144,7 @@ public class CardManager : MonoBehaviour
     IEnumerator SpawnCardObjects(bool isPlayerCard, GameObject card) //카드 오브젝트 스폰해서 테이블에 놓기
     {
         _candDeal = false;
-        GameObject dealtCard = Instantiate(card, new Vector3(0, 1f,0), Quaternion.Euler(90, 0, 90f)); //덱 위치에서 소환
+        GameObject dealtCard = Instantiate(card, new Vector3(0, 1f, 0), Quaternion.Euler(90, 0, 90f)); //덱 위치에서 소환
         _cardsOnTable.Add(dealtCard);
         if (isPlayerCard)
         {
@@ -148,7 +153,7 @@ public class CardManager : MonoBehaviour
             while (Vector3.Distance(dealtCard.transform.position, targetPosition) > 0.1f)
             {
                 dealtCard.transform.position = Vector3.MoveTowards(dealtCard.transform.position, targetPosition, _cardMoveSpeed * Time.deltaTime);
-                yield  return null;
+                yield return null;
             }
             dealtCard.transform.position = targetPosition;
             dealtCard.transform.rotation = Quaternion.Euler(-90f, 0, 90f); //플레이어 카드는 숫자 확인 가능하게 회전

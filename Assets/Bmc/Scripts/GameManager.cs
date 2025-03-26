@@ -5,12 +5,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance => _instance;
-    static GameManager _instance;
 
+
+    static GameManager _instance;
     public bool IsPlayerTurn { get; set; }
     bool _isPlayerTurn = false;
     Player _player;
-    public Player Player=> _player;
+    public Player Player => _player;
     Enemy _enemy;
     public Enemy Enemy => _enemy;
 
@@ -37,7 +38,7 @@ public class GameManager : MonoBehaviour
     // 플레이어 및 적 상태에 따른 상황 판단
     public void CheckState()
     {
-        if(_isPlayerTurn)
+        if (_isPlayerTurn)
         {
             if (_player.CurrentState == Define.PlayState.Draw)
             {
@@ -46,11 +47,11 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if(_enemy.CurrentState == Define.PlayState.Draw)
+            if (_enemy.CurrentState == Define.PlayState.Draw)
             {
                 _enemy.Play();  // 카드 뽑기
             }
-            else if(_enemy.CurrentState == Define.PlayState.Check)
+            else if (_enemy.CurrentState == Define.PlayState.Check)
             {
                 CardManager.Instance.CalculatePoint();    // Check일 때 뭐 할지 결정
             }
