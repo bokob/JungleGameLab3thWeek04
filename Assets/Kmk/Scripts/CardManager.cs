@@ -2,12 +2,17 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Collections;
-
+using Bmc;
 public class CardManager : MonoBehaviour
 {
     public static CardManager Instance => _instance;
 
     static CardManager _instance;
+
+    public List<Card> Deck => _deck;
+    public List<Card> PlayerDeck => _playerDeck;
+    public List<Card> EnemyDeck => _enemyDeck;
+    public List<Card> UsedDeck => _usedDeck;
 
     List<Card> _deck = new List<Card>();
     List<Card> _playerDeck = new List<Card>();
@@ -28,32 +33,33 @@ public class CardManager : MonoBehaviour
         _instance = this;
         Init();
     }
-    private void Start()
-    {
-        FirstDealing();
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn;
-        }
+    //private void Start()
+    //{
+    //    FirstDealing();
+    //}
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.T))
+    //    {
+    //        GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn;
+    //    }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Dealing();
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            FirstDealing();
-        }
+    //    if (Input.GetKeyDown(KeyCode.Space))
+    //    {
+    //        Dealing();
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.R))
+    //    {
+    //        FirstDealing();
+    //    }
 
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            Tuple<int, int> test = CalculatePoint();
-            Debug.Log($"Enemy Point {test.Item1} Player Point {test.Item2}");
-        }
-    }
+    //    if (Input.GetKeyDown(KeyCode.C))
+    //    {
+    //        Tuple<int, int> test = CalculatePoint();
+    //        Debug.Log($"Enemy Point {test.Item1} Player Point {test.Item2}");
+    //    }
+    //}
+
     void Init() //초기화 시 덱에 모든 카드 넣기
     {
         ResetDeck();
@@ -86,8 +92,8 @@ public class CardManager : MonoBehaviour
             _playerDeck.Add(_deck[deckIndex]);
             _deck.RemoveAt(deckIndex);
         }
-        //GameManager.Enemy.CurrentState = Define.PlayState.Draw; //적이 플레이를 할 차례이기에 상태를 Draw로 변경
-        //GameManager.Instance.CheckState();
+        GameManager.Instance.Enemy.CurrentState = Define.PlayState.Draw; //적이 플레이를 할 차례이기에 상태를 Draw로 변경
+        GameManager.Instance.CheckState();
     }
 
     public void Dealing() //덱에서 한 장을 뽑아 플레이어 또는 상대 덱에 넣기
@@ -95,7 +101,7 @@ public class CardManager : MonoBehaviour
         if (_deck.Count == 0)
         {
             GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn; //덱에 남은 카드가 없을 시 턴 종료
-            //GameManager.Instance.CheckState(); //턴 종료
+            GameManager.Instance.CheckState(); //턴 종료
             return;
         }
         if (!_candDeal) return;
@@ -127,8 +133,7 @@ public class CardManager : MonoBehaviour
         {
             playerPoint += card.Number;
         }
-        GameManager.Instance.Enemy.ChooseDecision(enemyPoint);
-        //UIManager.Instance.ShowDraw();
+        
         return Tuple.Create(enemyPoint, playerPoint);
     }
 
