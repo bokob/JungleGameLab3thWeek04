@@ -33,32 +33,6 @@ public class CardManager : MonoBehaviour
         _instance = this;
         Init();
     }
-    //private void Start()
-    //{
-    //    FirstDealing();
-    //}
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.T))
-    //    {
-    //        GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn;
-    //    }
-
-    //    if (Input.GetKeyDown(KeyCode.Space))
-    //    {
-    //        Dealing();
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.R))
-    //    {
-    //        FirstDealing();
-    //    }
-
-    //    if (Input.GetKeyDown(KeyCode.C))
-    //    {
-    //        Tuple<int, int> test = CalculatePoint();
-    //        Debug.Log($"Enemy Point {test.Item1} Player Point {test.Item2}");
-    //    }
-    //}
 
     void Init() //초기화 시 덱에 모든 카드 넣기
     {
@@ -78,7 +52,7 @@ public class CardManager : MonoBehaviour
         _playerDeck.Clear();
         DiscardCards();
         UIManager.Instance.UIUsedCardCanvas.UpdateUsedCardUI();
-        UIManager.Instance.UIUsedCardCanvas.DebugDict();
+        
         if (_deck.Count < 4) //덱에 남은 카드가 3장 이하일 시 덱 초기화
         {
             ResetDeck();
@@ -88,7 +62,7 @@ public class CardManager : MonoBehaviour
 
             // 에너미 드로우
             int deckIndex = UnityEngine.Random.Range(0, _deck.Count);
-            StartCoroutine(SpawnCardObjects(false, _deck[deckIndex].gameObject));  
+            StartCoroutine(SpawnCardObjects(false, _deck[deckIndex].gameObject));
             _enemyDeck.Add(_deck[deckIndex]); //덱에서 랜덤하게 카드를 뽑아 상대 덱에 넣기
             SoundManager.Instance.PlayEffect("Card_Sound");
 
@@ -124,7 +98,7 @@ public class CardManager : MonoBehaviour
             StartCoroutine(SpawnCardObjects(true, _deck[deckIndex].gameObject));
             _deck.RemoveAt(deckIndex);
         }
-        else if(!GameManager.Instance.IsPlayerTurn&& _enemyDeck.Count < _limit)//현재 상대 턴일 시
+        else if (!GameManager.Instance.IsPlayerTurn && _enemyDeck.Count < _limit)//현재 상대 턴일 시
         {
             int deckIndex = UnityEngine.Random.Range(0, _deck.Count);
             _enemyDeck.Add(_deck[deckIndex]);
@@ -147,7 +121,7 @@ public class CardManager : MonoBehaviour
         {
             playerPoint += card.Number;
         }
-        
+
         return Tuple.Create(enemyPoint, playerPoint);
     }
 
@@ -155,6 +129,7 @@ public class CardManager : MonoBehaviour
     {
         _deck.Clear();
         _usedDeck.Clear();
+        UIManager.Instance.UIUsedCardCanvas.ResetUI();
         for (int i = 0; i < 52; i++)
         {
             _deck.Add(Resources.Load<Card>($"Cards/{i}"));

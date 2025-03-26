@@ -21,6 +21,13 @@ public class UI_UsedCardCanvas : MonoBehaviour
             _usedCountDict[i] = 0;
     }
 
+    public void ResetUI()
+    {
+        for(int i = 0; i < _usedCountDict.Count; i++)
+        {
+            _usedCountDict[i] = 0;
+        }
+    }
     // 테스트 코드
     public void DebugDict()
     {
@@ -32,6 +39,8 @@ public class UI_UsedCardCanvas : MonoBehaviour
 
     public void UpdateUsedCardUI()
     {
+        Init();
+
         List<Card> usedDeck = CardManager.Instance.UsedDeck;
         foreach(Card card in usedDeck)
         {
