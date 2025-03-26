@@ -52,7 +52,7 @@ public class CardManager : MonoBehaviour
     }
     public void FirstDealing() //매턴 시작마다 상대와 플레이어에게 2장식 카드 제공
     {
-        foreach(Card card in _enemyDeck)
+        foreach (Card card in _enemyDeck)
         {
             _usedDeck.Add(card);
         }
@@ -139,16 +139,15 @@ public class CardManager : MonoBehaviour
         if (isPlayerCard)
         {
             dealtCard.transform.SetParent(_playerPos);
-            Debug.Log(_playerPos.position + new Vector3(0.5f * (_playerPos.childCount - 1), 0f, 0f));
-            dealtCard.transform.position = _playerPos.position + new Vector3(0.5f * (_playerPos.childCount - 1), 0f, 0f);
-            dealtCard.transform.rotation = Quaternion.Euler(-90f, 0, 0);
+            Debug.Log(_playerPos.childCount);
+            dealtCard.transform.position = _playerPos.position + new Vector3(0f, 0.0002f * (_playerPos.childCount - 1), -0.025f * (_playerPos.childCount - 1));
+            dealtCard.transform.rotation = Quaternion.Euler(-90f, 0, 90f);
         }
         else
         {
             dealtCard.transform.SetParent(_enemyPos);
-            Debug.Log(_enemyPos.position + new Vector3(0.5f * (_enemyPos.childCount - 1), 0f, 0f));
-            dealtCard.transform.position = _enemyPos.position + new Vector3(0.5f * (_enemyPos.childCount - 1), 0f, 0f);
-            dealtCard.transform.rotation = Quaternion.Euler(90f, 0, 0);
+            dealtCard.transform.position = _enemyPos.position + new Vector3(0f, 0.0002f * (_enemyPos.childCount - 1), 0.025f * (_enemyPos.childCount - 1));
+            dealtCard.transform.rotation = Quaternion.Euler(90f, 0, -90f);
         }
     }
 
@@ -156,10 +155,10 @@ public class CardManager : MonoBehaviour
     {
         foreach (GameObject card in _cardsOnTable)
         {
+            card.transform.SetParent(null);
             Destroy(card);
         }
         _cardsOnTable.Clear();
-
     }
 
 }
