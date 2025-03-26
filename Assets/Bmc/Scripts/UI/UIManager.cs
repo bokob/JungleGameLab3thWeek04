@@ -40,6 +40,8 @@ public class UIManager : MonoBehaviour
     TextMeshProUGUI _kingText;
     #endregion
 
+    UI_UsedCardCanvas _uiUsedCardCanvas;
+
     void Awake()
     {
         if (_instance == null)
@@ -66,10 +68,13 @@ public class UIManager : MonoBehaviour
         _guessResultCanvas = FindAnyObjectByType<UI_CheckResultCanvas>().gameObject.GetComponent<Canvas>();
         _ruleCanvas = FindAnyObjectByType<UI_RuleCanvas>().gameObject.GetComponent<Canvas>();
         _drawCanvas = FindAnyObjectByType<UI_DrawCanvas>().gameObject.GetComponent<Canvas>();
-        _usedCardCanvas = FindAnyObjectByType<UI_UsedCardCanvas>().gameObject.GetComponent<Canvas>();
+        
         _gameStartCanvas = FindAnyObjectByType<GameStartCanvas>().gameObject.GetComponent<Canvas>();
         _gameOverCanvas = FindAnyObjectByType<GameOverCanvas>().gameObject.GetComponent<Canvas>();
         _gameClearCanvas = FindAnyObjectByType<GameOverCanvas>().gameObject.GetComponent<Canvas>();
+
+        _uiUsedCardCanvas = FindAnyObjectByType<UI_UsedCardCanvas>();
+        _usedCardCanvas = _uiUsedCardCanvas.gameObject.GetComponent<Canvas>();
     }
 
     public void DescribeAction()
@@ -161,15 +166,15 @@ public class UIManager : MonoBehaviour
         {
             case 1:
                 Debug.Log("up");
-                GameManager.Instance.PlayerDecision = Define.Decision.Up;
+                GameManager.Instance.PlayerGuess = Define.Decision.Up;
                 break;
             case 2:
                 Debug.Log("spot");
-                GameManager.Instance.PlayerDecision = Define.Decision.BlackJack;
+                GameManager.Instance.PlayerGuess = Define.Decision.BlackJack;
                 break;
             case 3:
                 Debug.Log("down");
-                GameManager.Instance.PlayerDecision = Define.Decision.Down;
+                GameManager.Instance.PlayerGuess = Define.Decision.Down;
                 break;
         }
         DisableAllCanvas();
@@ -185,6 +190,7 @@ public class UIManager : MonoBehaviour
     {
         DisableAllCanvas();
         Tuple<int, int> points = CardManager.Instance.CalculatePoint();
+        _guessResultCanvas.GetComponent<UI_CheckResultCanvas>().SetRoundResult();
         //디시전 표시
         //points.item1 = 적 점수
         //points.item2 = 플레이어 점수
