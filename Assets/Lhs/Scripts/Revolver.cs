@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Bmc;
 using NUnit.Framework.Constraints;
+using System.Net;
 public class Revolver : MonoBehaviour
 {
     [SerializeField] Animator _animator; // 애니메이션 제어
@@ -51,6 +52,7 @@ public class Revolver : MonoBehaviour
                 _Camera.GetComponent<CameraController>().enabled = false;
                 yield return new WaitForSeconds(1f);
                 GameManager.Instance.GamePhase = Define.GamePhase.End;
+                UIManager.Instance.DisableAllCanvas();
                 UIManager.Instance.ToggleGameOver();
 
             }
@@ -64,6 +66,7 @@ public class Revolver : MonoBehaviour
                 GameManager.Instance.GamePhase = Define.GamePhase.End;
                 if (GameManager.Instance.Player.CurrentState != Define.PlayState.Death)
                 {
+                    UIManager.Instance.DisableAllCanvas();
                     UIManager.Instance.ToggleGameClear();
                 }
             }
@@ -75,6 +78,13 @@ public class Revolver : MonoBehaviour
         {
             Debug.Log("살았다 슈발 ㅠㅠ + 총알 추가");
             ammo += 1;
+            if(_owner.name == "Player")
+            {
+                StartCoroutine(UIManager.Instance.StartPlayerReload());
+            } else
+            {
+                StartCoroutine(UIManager.Instance.StartEnemyReload());
+            }
         }
 
     }

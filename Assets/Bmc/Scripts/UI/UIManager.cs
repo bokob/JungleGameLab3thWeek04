@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Bmc;
 using System;
 using UnityEngine.SceneManagement;
+using System.Collections;
 public class UIManager : MonoBehaviour
 {
     static UIManager _instance;
@@ -22,6 +23,10 @@ public class UIManager : MonoBehaviour
     Canvas _gameOverCanvas;     // 게임 오버
     #endregion
 
+    #region Reload Canvas
+    [SerializeField] GameObject _playerReload;
+    [SerializeField] GameObject _enemyReload;
+    #endregion
     #region TextMeshPro
     TextMeshProUGUI _gameResult;
 
@@ -227,5 +232,22 @@ public class UIManager : MonoBehaviour
     {
         _gameOverCanvas.enabled = !_gameOverCanvas.enabled;
     }
+    #endregion
+
+    #region 리로드 영상 토글
+    public IEnumerator StartPlayerReload()
+    {
+        _playerReload.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        _playerReload.SetActive(false);
+    }
+
+    public IEnumerator StartEnemyReload()
+    {
+        _enemyReload.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        _enemyReload.SetActive(false);
+    }
+
     #endregion
 }
