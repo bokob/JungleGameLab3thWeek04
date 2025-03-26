@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     {
         if (_enemy.CurrentState != Define.PlayState.Death && _player.CurrentState != Define.PlayState.Death)
         {
-            
+
             _enemy.CurrentState = Define.PlayState.None;
             _player.CurrentState = Define.PlayState.None;
             UIManager.Instance.ToggleMain();
@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(Call());
         Debug.Log("뉴라운드 호출");
-        UIManager.Instance.DisableAllCanvas();
+
         if (!playerWin)
         {
             StartCoroutine(_player.Revolver.Shoot());
@@ -132,7 +132,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Call()
     {
-        yield return new WaitForSeconds(4.0f);
+        UIManager.Instance.DisableAllCanvas();
+        yield return new WaitForSeconds(6.0f);
         Debug.Log("뉴라운드 코루틴 호출");
         NewRound();
     }

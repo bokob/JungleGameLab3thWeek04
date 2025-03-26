@@ -80,6 +80,8 @@ public class UIManager : MonoBehaviour
 
         _uiUsedCardCanvas = FindAnyObjectByType<UI_UsedCardCanvas>();
         _usedCardCanvas = _uiUsedCardCanvas.gameObject.GetComponent<Canvas>();
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void DescribeAction()
@@ -237,15 +239,17 @@ public class UIManager : MonoBehaviour
     #region 리로드 영상 토글
     public IEnumerator StartPlayerReload()
     {
+        yield return new WaitForSeconds(3.5f);
         _playerReload.SetActive(true);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         _playerReload.SetActive(false);
     }
 
     public IEnumerator StartEnemyReload()
     {
+        yield return new WaitForSeconds(3.5f);
         _enemyReload.SetActive(true);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         _enemyReload.SetActive(false);
     }
 

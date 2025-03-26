@@ -78,12 +78,17 @@ public class Revolver : MonoBehaviour
         {
             Debug.Log("살았다 슈발 ㅠㅠ + 총알 추가");
             ammo += 1;
-            if(_owner.name == "Player")
+            UIManager.Instance.DisableAllCanvas();
+            if (GameManager.Instance.Player.CurrentState != Define.PlayState.Death && GameManager.Instance.Enemy.CurrentState != Define.PlayState.Death)
             {
-                StartCoroutine(UIManager.Instance.StartPlayerReload());
-            } else
-            {
-                StartCoroutine(UIManager.Instance.StartEnemyReload());
+                if (_owner.name == "Player")
+                {
+                    StartCoroutine(UIManager.Instance.StartPlayerReload());
+                }
+                else
+                {
+                    StartCoroutine(UIManager.Instance.StartEnemyReload());
+                }
             }
         }
 
