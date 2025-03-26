@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            CardManager.Instance.FirstDealing();
+            Invoke(nameof(NewRound), 1f);
         }
     }
 
@@ -42,6 +42,14 @@ public class GameManager : MonoBehaviour
         _enemy = FindAnyObjectByType<Enemy>(); // 테스트 코드
         _player.CurrentState = Define.PlayState.None;
         _enemy.CurrentState = Define.PlayState.None;
+    }
+
+    public void NewRound()
+    {
+        _enemy.CurrentState = Define.PlayState.None;
+        _player.CurrentState = Define.PlayState.None;
+        IsPlayerTurn = false;
+        CardManager.Instance.FirstDealing();
     }
 
     // 플레이어 및 적 상태에 따른 상황 판단
