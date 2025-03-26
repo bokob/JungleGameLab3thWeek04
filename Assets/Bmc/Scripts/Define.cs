@@ -19,5 +19,10 @@ namespace Bmc
         {
             Up, BlackJack, Down
         }
+
+        public enum GamePhase
+        {
+            Start, Play, End
+        }
     }
 }

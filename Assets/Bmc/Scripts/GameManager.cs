@@ -2,6 +2,7 @@ using Bmc;
 using System;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class GameManager : MonoBehaviour
     Enemy _enemy;
     public Define.Decision EnemyDecision { get; set; }
     public Define.Decision PlayerDecision { get; set; }
-
+    public Define.GamePhase GamePhase { get; set; }
     void Awake()
     {
         if (_instance == null)
@@ -26,12 +27,14 @@ public class GameManager : MonoBehaviour
         Init();
     }
 
+    void Start()
+    {
+        InputManager.Instance.startGameAction += StartGame;
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Invoke(nameof(NewRound), 1f);
-        }
+       
     }
 
     public void Init()
@@ -42,6 +45,7 @@ public class GameManager : MonoBehaviour
         _enemy = FindAnyObjectByType<Enemy>(); // 테스트 코드
         _player.CurrentState = Define.PlayState.None;
         _enemy.CurrentState = Define.PlayState.None;
+        GamePhase = Define.GamePhase.Start;
     }
 
     public void NewRound()
@@ -74,4 +78,28 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    #region 게임시작/종료
+
+    public void StartGame()
+    {
+        Debug.Log("startGame");
+        switch (GameManager.Instance.GamePhase)
+        {
+            case Define.GamePhase.Start:
+                UIManager.Instance.DisableAllCanvas();
+                UIManager.Instance.ToggleMain();
+                GamePhase = Define.GamePhase.Play;
+                Invoke("NewRound", 1f);
+                break;
+            case Define.GamePhase.Play:
+                break;
+            case Define.GamePhase.End:
+                Scene gameScene = SceneManager.GetActiveScene();
+                SceneManager.LoadScene(gameScene.name);
+                break;
+        }
+    }
+
+    #endregion
 }

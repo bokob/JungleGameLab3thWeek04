@@ -19,6 +19,7 @@ public class InputManager : MonoBehaviour
     InputAction _drawInputAction;
     InputAction _stopInputAction;
     InputAction _exitInputAction;
+    InputAction _startGameInputAction;
     #endregion
 
     #region 액션
@@ -30,6 +31,7 @@ public class InputManager : MonoBehaviour
     public Action drawAction;
     public Action stopAction;
     public Action exitAction;
+    public Action startGameAction;
     #endregion
 
     void Awake()
@@ -54,6 +56,7 @@ public class InputManager : MonoBehaviour
         _drawInputAction = _inputActions.Player.Draw;
         _stopInputAction = _inputActions.Player.Stop;
         _exitInputAction = _inputActions.Player.Exit;
+        _startGameInputAction = _inputActions.Player.StartGame;
 
         _usedCardInputAction.Enable();
         _ruleInputAction.Enable();
@@ -63,6 +66,7 @@ public class InputManager : MonoBehaviour
         _drawInputAction.Enable();
         _stopInputAction.Enable();
         _exitInputAction.Enable();
+        _startGameInputAction.Enable();
 
         _usedCardInputAction.started += OnUsedCard;
         _ruleInputAction.started += OnRule;
@@ -72,6 +76,7 @@ public class InputManager : MonoBehaviour
         _drawInputAction.started += OnDraw;
         _stopInputAction.started += OnStop;
         _exitInputAction.started += OnExit;
+        _startGameInputAction.started += OnStartGame;
     }
 
     void OnUsedCard(InputAction.CallbackContext context)
@@ -151,5 +156,10 @@ public class InputManager : MonoBehaviour
         {
             exitAction?.Invoke();
         }
+    }
+
+    void OnStartGame(InputAction.CallbackContext context)
+    {
+        startGameAction?.Invoke();
     }
 }

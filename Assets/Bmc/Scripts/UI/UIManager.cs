@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Bmc;
 using System;
+using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     static UIManager _instance;
@@ -16,6 +17,9 @@ public class UIManager : MonoBehaviour
     Canvas _guessResultCanvas;  // 예측 결과
     Canvas _ruleCanvas;         // 룰
     Canvas _usedCardCanvas;     // 사용한 카드
+    Canvas _gameStartCanvas;     // 게임시작
+    Canvas _gameClearCanvas;     // 게임 클리어
+    Canvas _gameOverCanvas;     // 게임 오버
     #endregion
 
     #region TextMeshPro
@@ -63,6 +67,9 @@ public class UIManager : MonoBehaviour
         _ruleCanvas = FindAnyObjectByType<UI_RuleCanvas>().gameObject.GetComponent<Canvas>();
         _drawCanvas = FindAnyObjectByType<UI_DrawCanvas>().gameObject.GetComponent<Canvas>();
         _usedCardCanvas = FindAnyObjectByType<UI_UsedCardCanvas>().gameObject.GetComponent<Canvas>();
+        _gameStartCanvas = FindAnyObjectByType<GameStartCanvas>().gameObject.GetComponent<Canvas>();
+        _gameOverCanvas = FindAnyObjectByType<GameOverCanvas>().gameObject.GetComponent<Canvas>();
+        _gameClearCanvas = FindAnyObjectByType<GameOverCanvas>().gameObject.GetComponent<Canvas>();
     }
 
     public void DescribeAction()
@@ -86,6 +93,9 @@ public class UIManager : MonoBehaviour
         _ruleCanvas.enabled = false;
         _drawCanvas.enabled = false;
         _usedCardCanvas.enabled = false;
+        _gameStartCanvas.enabled = false;
+        _gameOverCanvas.enabled = false;
+        _gameClearCanvas.enabled = false;
     }
 
     public void ToggleMain()
