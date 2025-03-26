@@ -2,9 +2,9 @@ namespace Kmk
 {
     public class Define
     {
-        public enum CardShape
+        public enum Face
         {
-            Spade, Club, Diamond, Heart
+            Number, Jack, Queen, King
         }
 
     }
