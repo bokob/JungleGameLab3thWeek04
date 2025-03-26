@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     public void Init()
     {
         Debug.Log("게임 매니저 생성");
+
+        _player = FindAnyObjectByType<Player>(); // 테스트 코드
     }
 
     // 플레이어 및 적 상태에 따른 상황 판단
@@ -42,7 +44,7 @@ public class GameManager : MonoBehaviour
         {
             if (_player.CurrentState == Define.PlayState.Draw)
             {
-                UIManager.Instance.ShowAddCardBtn();
+                UIManager.Instance.ToggleDraw();
             }
         }
         else
@@ -51,7 +53,7 @@ public class GameManager : MonoBehaviour
             {
                 _enemy.Play();  // 카드 뽑기
             }
-            else if (_enemy.CurrentState == Define.PlayState.Check)
+            else if(_enemy.CurrentState == Define.PlayState.Guess)
             {
                 CardManager.Instance.CalculatePoint();    // Check일 때 뭐 할지 결정
             }

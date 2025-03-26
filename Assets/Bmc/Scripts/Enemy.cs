@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
             enemyPoint = CardManager.Instance.CalculatePoint().Item1;
         }
 
-        _currentState = Define.PlayState.Check;
+        _currentState = Define.PlayState.Guess;
         GameManager.Instance.IsPlayerTurn = true;
         GameManager.Instance.CheckState();
     }

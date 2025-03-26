@@ -102,7 +102,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _number: 3
   _isAce: 0
+<<<<<<< HEAD
+=======
   _face: 0
+>>>>>>> main
 --- !u!64 &1341893869821144992
 MeshCollider:
   m_ObjectHideFlags: 0

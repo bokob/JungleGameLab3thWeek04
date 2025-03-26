@@ -6,7 +6,7 @@ namespace Bmc
         {
             None,
             Draw,
-            Check,
+            Guess,
             Death
         }
     }
