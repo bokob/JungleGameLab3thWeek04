@@ -71,7 +71,7 @@ public class UIManager : MonoBehaviour
         
         _gameStartCanvas = FindAnyObjectByType<GameStartCanvas>().gameObject.GetComponent<Canvas>();
         _gameOverCanvas = FindAnyObjectByType<GameOverCanvas>().gameObject.GetComponent<Canvas>();
-        _gameClearCanvas = FindAnyObjectByType<GameOverCanvas>().gameObject.GetComponent<Canvas>();
+        _gameClearCanvas = FindAnyObjectByType<GameClearCanvas>().gameObject.GetComponent<Canvas>();
 
         _uiUsedCardCanvas = FindAnyObjectByType<UI_UsedCardCanvas>();
         _usedCardCanvas = _uiUsedCardCanvas.gameObject.GetComponent<Canvas>();
