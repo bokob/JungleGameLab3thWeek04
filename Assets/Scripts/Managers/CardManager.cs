@@ -178,4 +178,12 @@ public class CardManager : MonoBehaviour
         }
         _cardsOnTable.Clear();
     }
+
+    public void FlipCards()
+    {
+        for(int i = 0; i < _enemyCardPos.childCount; i++)
+        {
+            _enemyCardPos.GetChild(i).transform.rotation = Quaternion.Euler(-90f, 0f, -90f);
+        }
+    }
 }

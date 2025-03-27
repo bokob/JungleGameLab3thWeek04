@@ -75,6 +75,7 @@ public class CameraController : MonoBehaviour
     public IEnumerator GuessResultDirection(float time, bool playerWin, bool enemyWin)
     {
         SwitchCamera();
+        CardManager.Instance.FlipCards();
         yield return new WaitForSeconds(time);
         SwitchCamera();
         yield return new WaitForSeconds(time / 2);
