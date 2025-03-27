@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using System;
 using System.Collections;
+using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     static UIManager _instance;
@@ -25,8 +26,12 @@ public class UIManager : MonoBehaviour
     #endregion
 
     #region TextMeshPro
-    TextMeshProUGUI _winStreak;
+    TextMeshProUGUI _highestWinStreak;
+    TextMeshProUGUI _gameStartWinStreak;
+    TextMeshProUGUI _gameClearWinStreak;
     #endregion
+
+    Image _crownImage;  // 왕관 이미지
 
     public UI_UsedCardCanvas UIUsedCardCanvas => _uiUsedCardCanvas;
     UI_UsedCardCanvas _uiUsedCardCanvas;    // 사용한 카드
@@ -43,10 +48,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         SubscribeAction();
-    }
-
-    void Update()
-    {
+        ToggleGameStart();
     }
 
     // 모든 UI 컴포넌트 찾고, 등록할 것이 있으면 등록
@@ -74,7 +76,11 @@ public class UIManager : MonoBehaviour
         _gameOverCanvas = FindAnyObjectByType<UI_GameOverCanvas>().gameObject.GetComponent<Canvas>();
         _gameClearCanvas = FindAnyObjectByType<UI_GameClearCanvas>().gameObject.GetComponent<Canvas>();
 
-        _winStreak = FindAnyObjectByType<UI_Winstreak>().gameObject.GetComponent<TextMeshProUGUI>();
+        _highestWinStreak = FindAnyObjectByType<UI_HighestWinStreak>().gameObject.GetComponent<TextMeshProUGUI>();
+        _gameStartWinStreak = FindAnyObjectByType<UI_GameStartWinStreak>().gameObject.GetComponent<TextMeshProUGUI>();
+        _gameClearWinStreak = FindAnyObjectByType<UI_GameClearWinstreak>().gameObject.GetComponent<TextMeshProUGUI>();
+
+        _crownImage = FindAnyObjectByType<UI_CrownImage>().gameObject.GetComponent<Image>();
     }
 
     // 액션 등록
@@ -82,6 +88,21 @@ public class UIManager : MonoBehaviour
     {
         InputManager.Instance.toggleUsedCardAction += ToggleUsedCard;
         InputManager.Instance.toggleRuleAction += ToggleRule;
+    }
+
+    // 게임 시작 UI
+    public void ToggleGameStart()
+    {
+        _gameStartCanvas.enabled = true;
+
+        int highestWinstreak = PlayerPrefs.GetInt("HighestWinstreak");
+        int winStreak = PlayerPrefs.GetInt("Winstreak");
+
+        if (highestWinstreak >= 20)
+            _crownImage.enabled = true;
+
+        _highestWinStreak.text = $"Highest Winstreak: {highestWinstreak}";
+        _gameStartWinStreak.text = $"Winstreak: {winStreak}";
     }
 
     // 모든 캔버스 컴포넌트 비활성화
@@ -160,7 +181,11 @@ public class UIManager : MonoBehaviour
     #region 게임 클리어/게임오버
     public void ToggleGameClear()
     {
-        _winStreak.text = $"Winstreak: {PlayerPrefs.GetInt("Winstreak")}";
+        _gameClearWinStreak.text = $"Winstreak: {GameManager.Instance.WinStreak}";
+        if(GameManager.Instance.HighestWinStreak < GameManager.Instance.WinStreak)
+        {
+            PlayerPrefs.SetInt("HighestWinstreak", GameManager.Instance.WinStreak);
+        }
         _gameClearCanvas.enabled = !_gameClearCanvas.enabled;
     }
 

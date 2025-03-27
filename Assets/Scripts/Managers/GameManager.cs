@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     #region 게임
     public Define.GamePhase GamePhase { get; set; } // 게임 흐름
     public bool IsPlayerTurn { get; set; }          // 플레이어 차례 여부
-    public int Winstreak { get; set; }              // 연승
+    public int HighestWinStreak { get; set; }       // 최고 연승
+    public int WinStreak { get; set; }              // 연승
     #endregion
 
     #region 카메라
@@ -59,16 +60,21 @@ public class GameManager : MonoBehaviour
         
         GamePhase = Define.GamePhase.Start;
 
-        LoadWinstreak();
+        LoadWinStreak();
     }
 
     // 연승 정보 불러오기
-    void LoadWinstreak()
+    void LoadWinStreak()
     {
         if (PlayerPrefs.HasKey("Winstreak"))
-            Winstreak = PlayerPrefs.GetInt("Winstreak");
+            WinStreak = PlayerPrefs.GetInt("Winstreak");
         else
             PlayerPrefs.SetInt("Winstreak", 0);
+
+        if (PlayerPrefs.HasKey("HighestWinstreak"))
+            WinStreak = PlayerPrefs.GetInt("HighestWinstreak");
+        else
+            PlayerPrefs.SetInt("HighestWinstreak", 0);
     }
 
     public void NewRound()
