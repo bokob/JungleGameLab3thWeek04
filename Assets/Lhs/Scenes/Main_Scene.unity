@@ -1200,6 +1200,9 @@ MonoBehaviour:
   _mouseSensitivity: 5
   _xRotation: 0
   _yRotation: 0
+  _gameCamera: {fileID: 0}
+  _tableCamera: {fileID: 0}
+  _isTable: 0
 --- !u!114 &107891060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7315,8 +7318,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66168b9f990d5e64eb5293832e340596, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardMoveSpeed: 5
-  _cardSpace: 0.05
   _playerCardPos: {fileID: 223189546}
   _enemyCardPos: {fileID: 1640564694}
 --- !u!4 &888410349
@@ -9051,8 +9052,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1d6d57536c4934098af730c98dda6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerReload: {fileID: 2117210265}
-  _enemyReload: {fileID: 845953010}
 --- !u!114 &1116016635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11848,8 +11847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 0}
   _owner: {fileID: 0}
-  _Camera: {fileID: 0}
-  ammo: 0
+  _camera: {fileID: 0}
 --- !u!1 &1395881828 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e63a921b756c1d440b01792ad1923ba6, type: 3}
@@ -11874,8 +11872,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 0}
   _owner: {fileID: 0}
-  _Camera: {fileID: 0}
-  ammo: 0
+  _camera: {fileID: 0}
 --- !u!1001 &1417712457
 PrefabInstance:
   m_ObjectHideFlags: 0
