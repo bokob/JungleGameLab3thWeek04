@@ -45,6 +45,8 @@ public class Revolver : MonoBehaviour
             _muzzleFlashEffect.Play(); // + 파티클 효과 넣어서 껏다켯다
             if (_owner.gameObject.name == "Player")
             {
+                PlayerPrefs.SetInt("Winstreak", 0);
+
                 SoundManager.Instance.PlayEffect("Shoot");
                 Debug.Log("플레이어 사망");
                 _owner.GetComponent<Player>().CurrentState = Define.PlayState.Death;
@@ -68,6 +70,9 @@ public class Revolver : MonoBehaviour
                 GameManager.Instance.GamePhase = Define.GamePhase.End;
                 if (GameManager.Instance.Player.CurrentState != Define.PlayState.Death)
                 {
+                    int currentWinstreak = PlayerPrefs.GetInt("Winstreak");
+                    PlayerPrefs.SetInt("Winstreak", currentWinstreak + 1);
+
                     UIManager.Instance.DisableAllCanvas();
                     UIManager.Instance.ToggleGameClear();
                 }

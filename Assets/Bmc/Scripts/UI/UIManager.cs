@@ -28,21 +28,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject _enemyReload;
     #endregion
     #region TextMeshPro
-    TextMeshProUGUI _gameResult;
-
-    TextMeshProUGUI _aceText;
-    TextMeshProUGUI _twoText;
-    TextMeshProUGUI _threeText;
-    TextMeshProUGUI _fourText;
-    TextMeshProUGUI _fiveText;
-    TextMeshProUGUI _sixText;
-    TextMeshProUGUI _sevenText;
-    TextMeshProUGUI _eightText;
-    TextMeshProUGUI _nineText;
-    TextMeshProUGUI _tenText;
-    TextMeshProUGUI _jackText;
-    TextMeshProUGUI _queenText;
-    TextMeshProUGUI _kingText;
+    TextMeshProUGUI _winStreak;
     #endregion
 
     UI_UsedCardCanvas _uiUsedCardCanvas;
@@ -80,6 +66,8 @@ public class UIManager : MonoBehaviour
 
         _uiUsedCardCanvas = FindAnyObjectByType<UI_UsedCardCanvas>();
         _usedCardCanvas = _uiUsedCardCanvas.gameObject.GetComponent<Canvas>();
+
+        _winStreak = FindAnyObjectByType<UI_Winstreak>().gameObject.GetComponent<TextMeshProUGUI>();
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -227,6 +215,7 @@ public class UIManager : MonoBehaviour
     #region 게임 클리어/게임오버
     public void ToggleGameClear()
     {
+        _winStreak.text = $"Winstreak: {PlayerPrefs.GetInt("Winstreak")}";
         _gameClearCanvas.enabled = !_gameClearCanvas.enabled;
     }
 

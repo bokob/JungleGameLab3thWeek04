@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public Define.Decision EnemyGuess { get; set; }
     public Define.Decision PlayerGuess { get; set; }
 
+    public int Winstreak { get; set; }
+
     void Awake()
     {
         if (_instance == null)
@@ -48,6 +50,15 @@ public class GameManager : MonoBehaviour
         _player.CurrentState = Define.PlayState.None;
         _enemy.CurrentState = Define.PlayState.None;
         GamePhase = Define.GamePhase.Start;
+
+        if(PlayerPrefs.HasKey("Winstreak"))
+        {
+            Winstreak = PlayerPrefs.GetInt("Winstreak");
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Winstreak", 0);
+        }
     }
 
     public void NewRound()

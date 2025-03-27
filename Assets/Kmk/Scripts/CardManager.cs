@@ -129,7 +129,7 @@ public class CardManager : MonoBehaviour
     {
         _deck.Clear();
         _usedDeck.Clear();
-        UIManager.Instance.UIUsedCardCanvas.ResetUI();
+        //UIManager.Instance.UIUsedCardCanvas.ResetUI();
         for (int i = 0; i < 52; i++)
         {
             _deck.Add(Resources.Load<Card>($"Cards/{i}"));
