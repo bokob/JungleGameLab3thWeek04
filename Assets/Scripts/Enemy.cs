@@ -35,16 +35,17 @@ public class Enemy : MonoBehaviour
 
         // 플레이어의 패를 평균값으로 가정하고 21보다 큰 지, 작은 지에 따라서 판단
         // up, spot, down
-        int avg = point / cnt; // 버림
-        if (avg > CardManager.Instance.BlackJack) // up
+        float avg = (float)point / cnt;
+        float predictScore = avg * playerDeck.Count;
+        if (predictScore > CardManager.Instance.BlackJack) // up
         {
             GameManager.Instance.EnemyGuess = Define.Guess.Up;
         }
-        else if (avg < CardManager.Instance.BlackJack) // down
+        else if (predictScore < CardManager.Instance.BlackJack) // down
         {
             GameManager.Instance.EnemyGuess = Define.Guess.Down;
         }
-        else // spot
+        else // blackJack
         {
             GameManager.Instance.EnemyGuess = Define.Guess.BlackJack;
         }

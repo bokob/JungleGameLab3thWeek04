@@ -26,7 +26,6 @@ public class CardManager : MonoBehaviour
 
     #region 카드
     public int BlackJack { get; } = 21;                         // 블랙잭 값
-    bool _canDraw = true;                                       // 카드를 뽑을 수 있는지 여부
     int _drawLimit = 6;                                         // 한 턴에 뽑을 수 있는 카드 수
     float _cardMoveSpeed = 5;                                   // 카드 움직임 속도
     float _cardSpace = 0.05f;                                   // 카드 사이 간격
@@ -102,9 +101,6 @@ public class CardManager : MonoBehaviour
             GameManager.Instance.CheckState();                                      // 턴 종료
             return;
         }
-
-        if (!_canDraw) 
-            return;
         
         /* 추후에 더 줄이기 */
         int deckIndex = UnityEngine.Random.Range(0, _deck.Count);
@@ -148,8 +144,6 @@ public class CardManager : MonoBehaviour
     // 카드 오브젝트 스폰해서 테이블에 놓기
     IEnumerator PutCardOnTableCoroutine(Transform cardPosTransform, bool isPlayerCard, GameObject card)
     {
-        _canDraw = false;
-
         // 테이블에 카드 추가
         GameObject dealtCard = Instantiate(card, new Vector3(0, 1f, 0), Quaternion.Euler(90, 0, 90f)); // 덱 위치에서 소환
         _cardsOnTable.Add(dealtCard);
@@ -165,11 +159,10 @@ public class CardManager : MonoBehaviour
         }
         dealtCard.transform.position = targetPosition;
         dealtCard.transform.rotation = Quaternion.Euler(offset * 90f, 0f, offset * -90f);
-
-        _canDraw = true;
     }
 
-    void DiscardCards() //현재 테이블에 있는 모든 카드 제거
+    // 현재 테이블에 있는 모든 카드 제거
+    void DiscardCards()
     {
         foreach (GameObject card in _cardsOnTable)
         {
@@ -179,6 +172,7 @@ public class CardManager : MonoBehaviour
         _cardsOnTable.Clear();
     }
 
+    // Guess Result 시, Enemy 카드 뒤집기
     public void FlipCards()
     {
         for(int i = 0; i < _enemyCardPos.childCount; i++)
