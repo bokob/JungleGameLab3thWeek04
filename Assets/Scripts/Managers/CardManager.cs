@@ -104,16 +104,19 @@ public class CardManager : MonoBehaviour
         
         /* 추후에 더 줄이기 */
         int deckIndex = UnityEngine.Random.Range(0, _deck.Count);
-        SoundManager.Instance.PlayEffect("Card_Sound");
+        
         if (GameManager.Instance.IsPlayerTurn && _playerDeck.Count < _drawLimit) //현재 플레이어 턴일시
+        
         {
             _playerDeck.Add(_deck[deckIndex]);
+            SoundManager.Instance.PlayEffect("Card_Sound");
             StartCoroutine(PutCardOnTableCoroutine(_playerCardPos, true, _deck[deckIndex].gameObject));
             _deck.RemoveAt(deckIndex);
         }
         else if (!GameManager.Instance.IsPlayerTurn && _enemyDeck.Count < _drawLimit)//현재 상대 턴일 시
         {
             _enemyDeck.Add(_deck[deckIndex]);
+            SoundManager.Instance.PlayEffect("Card_Sound");
             StartCoroutine(PutCardOnTableCoroutine(_enemyCardPos, false, _deck[deckIndex].gameObject));
             _deck.RemoveAt(deckIndex);
         }
