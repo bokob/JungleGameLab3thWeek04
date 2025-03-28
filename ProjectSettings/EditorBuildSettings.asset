@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Lhs/Scenes/Main_Scene.unity
-    guid: c3afecb9eeb18ba4fa5798ea3305b328
+    path: Assets/Scenes/Main_Scene_Copy.unity
+    guid: 07e5431c1644f40469c957f28f7298e8
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

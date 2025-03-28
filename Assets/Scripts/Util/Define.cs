@@ -22,6 +22,6 @@ public class Define
 
     public enum GamePhase
     {
-        Start, Play, Shooting, End
+        Opening, Start, Play, Shooting, End
     }
 }

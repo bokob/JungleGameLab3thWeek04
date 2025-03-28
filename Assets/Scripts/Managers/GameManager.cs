@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour
     #region 게임
     public Define.GamePhase GamePhase { get; set; } // 게임 흐름
     public bool IsPlayerTurn { get; set; }          // 플레이어 차례 여부
+    public int IsSeenOpening { get; set; }         // 오프닝 시청 여부
     public int HighestWinStreak { get; set; }       // 최고 연승
     public int WinStreak { get; set; }              // 연승
     #endregion
@@ -37,17 +39,11 @@ public class GameManager : MonoBehaviour
         {
             _instance = this;
         }
-
-        Init();
-    }
-
-    void Start()
-    {
-        InputManager.Instance.startGameAction += StartGame;
     }
 
     public void Init()
     {
+        InputManager.Instance.startGameAction += StartGame;
         InputManager.Instance.exitAction += GameExit;
 
         _player = FindAnyObjectByType<Player>();
@@ -57,24 +53,42 @@ public class GameManager : MonoBehaviour
         IsPlayerTurn = false;
         _player.CurrentState = Define.PlayState.None;
         _enemy.CurrentState = Define.PlayState.None;
-        
-        GamePhase = Define.GamePhase.Start;
 
-        LoadWinStreak();
+        LoadGameInfo();
+        
+        if(IsSeenOpening == 0)
+        {
+            GamePhase = Define.GamePhase.Opening;
+            PlayerPrefs.SetInt("IsSeenOpening", 1);
+            UIManager.Instance.ToggleOpening();
+        }
+        else
+        {
+            GamePhase = Define.GamePhase.Start;
+        }
+
     }
 
-    // 연승 정보 불러오기
-    void LoadWinStreak()
+    // 게임 정보 불러오기
+    void LoadGameInfo()
     {
+        // 연승
         if (PlayerPrefs.HasKey("Winstreak"))
             WinStreak = PlayerPrefs.GetInt("Winstreak");
         else
             PlayerPrefs.SetInt("Winstreak", 0);
 
+        // 최대 연승
         if (PlayerPrefs.HasKey("HighestWinstreak"))
             WinStreak = PlayerPrefs.GetInt("HighestWinstreak");
         else
             PlayerPrefs.SetInt("HighestWinstreak", 0);
+
+        // 오프닝 시청 기록
+        if (PlayerPrefs.HasKey("IsSeenOpening"))
+            IsSeenOpening = PlayerPrefs.GetInt("IsSeenOpening");
+        else
+            PlayerPrefs.SetInt("IsSeenOpening", 0);
     }
 
     public void NewRound()
@@ -120,11 +134,14 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("startGame");
-        switch (GameManager.Instance.GamePhase)
+        switch (GamePhase)
         {
+            case Define.GamePhase.Opening:
+                break;
             case Define.GamePhase.Start:
                 UIManager.Instance.DisableAllCanvas();
                 UIManager.Instance.ToggleMain();
+                SoundManager.Instance.PlayBGM();
                 GamePhase = Define.GamePhase.Play;
                 Invoke("NewRound", 1f);
                 break;
@@ -141,8 +158,13 @@ public class GameManager : MonoBehaviour
     // 플레이어 및 적에게 총 쏘라고 명령
     public void CallShootCoroutine(bool playerWin, bool enemyWin)
     {
-        StartCoroutine(Call());
+        
         Debug.Log("뉴라운드 호출");
+
+        if(playerWin && enemyWin)
+            StartCoroutine(Call(3f));
+        else
+            StartCoroutine(Call(6f));
 
         if (!playerWin)
         {
@@ -157,10 +179,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    IEnumerator Call()
+    IEnumerator Call(float waitTime)
     {
         UIManager.Instance.DisableAllCanvas();
-        yield return new WaitForSeconds(6.0f);
+        yield return new WaitForSeconds(waitTime);
         Debug.Log("뉴라운드 코루틴 호출");
         NewRound();
     }

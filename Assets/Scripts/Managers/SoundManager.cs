@@ -19,10 +19,9 @@ public class SoundManager : MonoBehaviour
         {
             _instance = this;
         }
-        Init();
     }
 
-    void Init()
+    public void Init()
     {
         _bgmSource = transform.GetChild(0).GetComponent<AudioSource>();
         _effectSource = transform.GetChild(1).GetComponent<AudioSource>();
@@ -30,10 +29,8 @@ public class SoundManager : MonoBehaviour
         // BGM AudioSource 설정
         _bgmSource.playOnAwake = true;
         _bgmSource.loop = true;
-        _bgmSource.volume = 0.05f;
+        _bgmSource.volume = 0.2f;
         _bgmSource.clip = _bgm;
-
-        PlayBGM();
     }
 
     // 배경음 재생

@@ -37,11 +37,10 @@ public class CardManager : MonoBehaviour
     void Awake()
     {
         _instance = this;
-        Init();
     }
 
     //초기화 시 덱에 모든 카드 넣기
-    void Init()
+    public void Init()
     {
         ResetDeck();
     }
@@ -63,13 +62,13 @@ public class CardManager : MonoBehaviour
         
         // 테이블 위 카드 처분
         DiscardCards();
-        UIManager.Instance.UIUsedCardCanvas.UpdateUsedCardUI(); // UsedCard UI 업데이트
-
+        
         // 덱에 남은 카드가 3장 이하일 시 덱 초기화
         if (_deck.Count < 4)
         {
             ResetDeck();
         }
+        UIManager.Instance.UIUsedCardCanvas.UpdateUsedCardUI(); // UsedCard UI 업데이트
 
         // 턴 시작시 카드 2장씩 배부
         for (int i = 0; i < 2; i++)
@@ -97,9 +96,18 @@ public class CardManager : MonoBehaviour
     {
         if (_deck.Count == 0)
         {
-            GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn; // 덱에 남은 카드가 없을 시 턴 종료
-            GameManager.Instance.CheckState();                                      // 턴 종료
-            return;
+            if (!GameManager.Instance.IsPlayerTurn)
+            {
+                GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn; // 덱에 남은 카드가 없을 시 턴 종료
+                GameManager.Instance.CheckState();                                      // 턴 종료
+            } else
+            {
+                GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn; // 덱에 남은 카드가 없을 시 턴 종료
+                GameManager.Instance.CheckState();
+                GameManager.Instance.Player.StopDrawCard();
+            }
+
+                return;
         }
         
         /* 추후에 더 줄이기 */

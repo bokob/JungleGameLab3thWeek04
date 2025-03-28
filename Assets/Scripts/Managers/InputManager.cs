@@ -39,10 +39,9 @@ public class InputManager : MonoBehaviour
         {
             _instance = this;
         }
-        Init();
     }
 
-    void Init()
+    public void Init()
     {
         Cursor.lockState = CursorLockMode.Locked;
 
