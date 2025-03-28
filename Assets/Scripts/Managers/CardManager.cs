@@ -12,6 +12,9 @@ public class CardManager : MonoBehaviour
 
     static CardManager _instance;
 
+    CardBox _cardBox;
+    float _interval = 0.00116f;
+
     #region 덱
     public List<Card> Deck => _deck;
     public List<Card> PlayerDeck => _playerDeck;
@@ -42,6 +45,7 @@ public class CardManager : MonoBehaviour
     //초기화 시 덱에 모든 카드 넣기
     public void Init()
     {
+        _cardBox = FindAnyObjectByType<CardBox>();
         ResetDeck();
     }
 
@@ -100,14 +104,15 @@ public class CardManager : MonoBehaviour
             {
                 GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn; // 덱에 남은 카드가 없을 시 턴 종료
                 GameManager.Instance.CheckState();                                      // 턴 종료
-            } else
+            } 
+            else
             {
                 GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn; // 덱에 남은 카드가 없을 시 턴 종료
                 GameManager.Instance.CheckState();
                 GameManager.Instance.Player.StopDrawCard();
             }
 
-                return;
+            return;
         }
         
         /* 추후에 더 줄이기 */
@@ -147,6 +152,7 @@ public class CardManager : MonoBehaviour
     {
         _deck.Clear();
         _usedDeck.Clear();
+        _cardBox.transform.position = new Vector3(0, 1, 0);
 
         for (int i = 0; i < 52; i++)
             _deck.Add(Resources.Load<Card>($"Cards/{i}"));
@@ -155,6 +161,9 @@ public class CardManager : MonoBehaviour
     // 카드 오브젝트 스폰해서 테이블에 놓기
     IEnumerator PutCardOnTableCoroutine(Transform cardPosTransform, bool isPlayerCard, GameObject card)
     {
+        // 카드 덱 줄어들기
+        _cardBox.transform.position += Vector3.down * _interval;
+
         // 테이블에 카드 추가
         GameObject dealtCard = Instantiate(card, new Vector3(0, 1f, 0), Quaternion.Euler(90, 0, 90f)); // 덱 위치에서 소환
         _cardsOnTable.Add(dealtCard);

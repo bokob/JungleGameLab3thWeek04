@@ -39,14 +39,14 @@ public class UI_GuessResultCanvas : MonoBehaviour
             || (GameManager.Instance.PlayerGuess == Define.Guess.BlackJack && enemyPoint == 21)
             || (GameManager.Instance.PlayerGuess == Define.Guess.Down && enemyPoint < 21))
         {
-            _playerGuessText.color = Color.green;
+            _playerGuessText.color = Color.white;
             playerWin = true;
         }
         if ((GameManager.Instance.EnemyGuess == Define.Guess.Up && playerPoint > 21)
             || (GameManager.Instance.EnemyGuess == Define.Guess.BlackJack && playerPoint == 21)
             || (GameManager.Instance.EnemyGuess == Define.Guess.Down && playerPoint < 21))
         {
-            _enemyGuessText.color = Color.green;
+            _enemyGuessText.color = Color.white;
             enemyWin = true;
         }
 
