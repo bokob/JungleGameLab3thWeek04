@@ -91,7 +91,7 @@
                 {
                     "name": "",
                     "id": "463adadc-b362-4f64-9e06-65ca8d395401",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/t",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -179,7 +179,7 @@
                 {
                     "name": "",
                     "id": "15617763-664a-454c-9db5-4dc59429a845",
-                    "path": "<Keyboard>/enter",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
