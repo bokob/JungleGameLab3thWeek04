@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Video;
 public class UIManager : MonoBehaviour
 {
     static UIManager _instance;
@@ -20,9 +21,11 @@ public class UIManager : MonoBehaviour
     Canvas _gameOverCanvas;     // 게임 오버
     #endregion
 
-    #region Reload Canvas GameObject (영상)
+    #region 영상
+    GameObject _opening;
     GameObject _playerReload;
     GameObject _enemyReload;
+    VideoClip _openingClip;
     #endregion
 
     #region TextMeshPro
@@ -42,13 +45,6 @@ public class UIManager : MonoBehaviour
         {
             _instance = this;
         }
-        Init();
-    }
-
-    void Start()
-    {
-        SubscribeAction();
-        ToggleGameStart();
     }
 
     // 모든 UI 컴포넌트 찾고, 등록할 것이 있으면 등록
@@ -65,9 +61,13 @@ public class UIManager : MonoBehaviour
 
         _ruleCanvas = FindAnyObjectByType<UI_RuleCanvas>().gameObject.GetComponent<Canvas>();
 
-        // 장전 영상
+        // 영상
+        _opening = FindAnyObjectByType<UI_OpeningCanvas>().gameObject;
+        _openingClip = _opening.GetComponentInChildren<VideoPlayer>().clip;
+
         _playerReload = FindAnyObjectByType<UI_PlayerReload>().gameObject;
         _enemyReload = FindAnyObjectByType<UI_EnemyReload>().gameObject;
+        _opening.SetActive(false);
         _playerReload.SetActive(false);
         _enemyReload.SetActive(false);
 
@@ -81,6 +81,11 @@ public class UIManager : MonoBehaviour
         _gameClearWinStreak = FindAnyObjectByType<UI_GameClearWinstreak>().gameObject.GetComponent<TextMeshProUGUI>();
 
         _crownImage = FindAnyObjectByType<UI_CrownImage>().gameObject.GetComponent<Image>();
+
+
+
+        SubscribeAction();
+        ToggleGameStart();
     }
 
     // 액션 등록
@@ -114,9 +119,24 @@ public class UIManager : MonoBehaviour
         _ruleCanvas.enabled = false;
         _drawCanvas.enabled = false;
         _usedCardCanvas.enabled = false;
+
+        _opening.SetActive(false);
+
         _gameStartCanvas.enabled = false;
         _gameOverCanvas.enabled = false;
         _gameClearCanvas.enabled = false;
+    }
+
+    // 오프닝 토글
+    public void ToggleOpening()
+    {
+        DisableAllCanvas();
+        _opening.SetActive(true);
+        StartCoroutine(WaitCoroutine((float)_openingClip.length, () => { 
+            GameManager.Instance.GamePhase = Define.GamePhase.Start;
+            DisableAllCanvas();
+            ToggleGameStart(); 
+        }));
     }
 
     // 메인 캔버스 토글
@@ -150,8 +170,6 @@ public class UIManager : MonoBehaviour
     {
         _guessCanvas.enabled = !_guessCanvas.enabled;
     }
-
-
     #endregion
 
     #region 체크 결과 확인
@@ -212,4 +230,10 @@ public class UIManager : MonoBehaviour
         _enemyReload.SetActive(false);
     }
     #endregion
+
+    IEnumerator WaitCoroutine(float time, Action action)
+    {
+        yield return new WaitForSeconds(time);
+        action.Invoke();
+    }
 }

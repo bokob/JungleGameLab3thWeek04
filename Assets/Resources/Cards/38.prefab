@@ -100,9 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11aace16ac923cb409a6ba7bedb2b430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _number: 1
+  _cardType: 0
+  _number: 11
   _isAce: 1
-  _face: 0
 --- !u!64 &4225328628342044070
 MeshCollider:
   m_ObjectHideFlags: 0
