@@ -70,12 +70,7 @@ public class UI_GuessResultCanvas : MonoBehaviour
         Tuple<int, int> points = CardManager.Instance.CalculatePoint();
         _guessResultCanvas.GetComponent<UI_GuessResultCanvas>().SetRoundResult();
         _guessResultCanvas.enabled = !_guessResultCanvas.enabled;
-        //디시전 표시
-        //points.item1 = 적 점수
-        //points.item2 = 플레이어 점수
-
-
-
+        
         Debug.Log(points.Item1 + " , " + points.Item2);
     }
 

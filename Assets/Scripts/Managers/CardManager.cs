@@ -99,19 +99,9 @@ public class CardManager : MonoBehaviour
     public void DrawCard() // 덱에서 한 장을 뽑아 플레이어 또는 상대 덱에 넣기
     {
         if (_deck.Count == 0)
-        {
-            //if (!GameManager.Instance.IsPlayerTurn)
-            //{
-            //    GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn; // 덱에 남은 카드가 없을 시 턴 종료
-            //    GameManager.Instance.CheckState();                                      // 턴 종료
-            //} 
-            //else
-            //{
-            //    GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn; // 덱에 남은 카드가 없을 시 턴 종료
-            //    GameManager.Instance.CheckState();
-            //    GameManager.Instance.Player.StopDrawCard();
-            //}
-            if (GameManager.Instance.IsPlayerTurn) {
+        { 
+            if (GameManager.Instance.IsPlayerTurn) 
+            {
                 GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn; // 덱에 남은 카드가 없을 시 턴 종료
                 GameManager.Instance.Player.StopDrawCard();
             }

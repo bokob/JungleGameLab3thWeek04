@@ -2107,7 +2107,8 @@ MonoBehaviour:
     \uC608\uC0C1\uC774 \uD2C0\uB838\uC744 \uACBD\uC6B0 \uB7EC\uC2DC\uC548 \uB8F0\uB81B\uC5D0
     \uB4E4\uC5B4\uAC00\uAC8C\uB429\uB2C8\uB2E4.\n\r\n\n5. \uB7EC\uC2DC\uC548 \uB8F0\uB81B\uC774
     \uC885\uB8CC \uB41C \uD6C4 \uC0B4\uC544\uB0A8\uC740 \uC0AC\uB78C\uC774 \uC2B9\uC790
-    \uC785\uB2C8\uB2E4.\n\r\n(2~9: 2~9\uC810 10,J,Q,K: 10\uC810 A: 11\uC810)"
+    \uC785\uB2C8\uB2E4.\n\r\n(2~9: 2~9\uC810 10, J, Q, K: 10\uC810 A: 11\uC810, Joker:
+    0\uC810)"
 --- !u!222 &201570886
 CanvasRenderer:
   m_ObjectHideFlags: 0

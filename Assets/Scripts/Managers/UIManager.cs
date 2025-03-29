@@ -54,9 +54,7 @@ public class UIManager : MonoBehaviour
         _playerReload = FindAnyObjectByType<UI_PlayerReload>().gameObject;
         _enemyReload = FindAnyObjectByType<UI_EnemyReload>().gameObject;
         
-        
         _opening.SetActive(false);
-        
         
         _playerReload.SetActive(false);
         _enemyReload.SetActive(false);

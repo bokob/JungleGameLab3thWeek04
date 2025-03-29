@@ -142,7 +142,6 @@ public class Revolver : MonoBehaviour
         int randomValue = Random.Range(1, _validNumbers.Count); // 인덱스 번호
         int Active_Bullet = _validNumbers[randomValue]; // 활성화 시킬 총알 번호
 
-
         pairBullets[Active_Bullet -1].gameObject.SetActive(true);
         pairBullets[Active_Bullet + 5].gameObject.SetActive(true);
 
@@ -158,7 +157,6 @@ public class Revolver : MonoBehaviour
             _playerAnimator.SetTrigger("Sylinder_Check");
             
         }
-
     }
 
     public void CylinderClose()
@@ -181,7 +179,6 @@ public class Revolver : MonoBehaviour
             _isOpenCylinder = false;
             SoundManager.Instance.PlayEffect("Cylinder_Colse");
         }
-
     }
 
     public void Cylinder_Spin_Sounds()
@@ -197,10 +194,7 @@ public class Revolver : MonoBehaviour
         if (_owner.name == "Player")
         {
             int randomValue = Random.Range(0, 8);
-
             _cylinderBone.transform.rotation = Quaternion.Euler(90, 0, 0);
-
-
             Debug.Log("돌림");
         }
     }
