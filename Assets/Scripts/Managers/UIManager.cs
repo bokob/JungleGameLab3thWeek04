@@ -116,7 +116,7 @@ public class UIManager : MonoBehaviour
         _mainCanvas.enabled = false;
         _guessCanvas.enabled = false;
         _guessResultCanvas.enabled = false;
-        _ruleCanvas.enabled = false;
+        //_ruleCanvas.enabled = false;
         _drawCanvas.enabled = false;
         _usedCardCanvas.enabled = false;
 
