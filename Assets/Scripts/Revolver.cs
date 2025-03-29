@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
-using static Unity.VisualScripting.Metadata;
 using System.Collections.Generic;
 public class Revolver : MonoBehaviour
 {
