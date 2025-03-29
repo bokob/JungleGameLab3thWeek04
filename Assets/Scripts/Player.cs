@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
                 break;
             case 2:
                 Debug.Log("spot");
-                GameManager.Instance.PlayerGuess = Define.Guess.BlackJack;
+                GameManager.Instance.PlayerGuess = Define.Guess.Spot;
                 break;
             case 3:
                 Debug.Log("down");
