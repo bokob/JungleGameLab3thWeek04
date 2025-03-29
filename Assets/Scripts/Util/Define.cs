@@ -17,7 +17,7 @@ public class Define
 
     public enum Guess
     {
-        Up, BlackJack, Down
+        Up, Spot, Down
     }
 
     public enum GamePhase

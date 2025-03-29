@@ -29,7 +29,7 @@ public class CameraController : MonoBehaviour
         _xRotation = Mathf.Clamp(_xRotation, -70f, 70f); // 위아래 고개 제한
 
         _yRotation += mouseX; // 좌우 회전 누적 (제한 없음)
-        _yRotation = Mathf.Clamp(_yRotation, -60f, 60f); // 좌우 고개 제한
+        _yRotation = Mathf.Clamp(_yRotation, -80f, 80f); // 좌우 고개 제한
 
         /* 추후에 GuessResult 시작 및 종료 때 각각 호출 */
         if (Input.GetKeyDown(KeyCode.B))

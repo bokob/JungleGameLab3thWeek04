@@ -84,7 +84,7 @@ public class Enemy : MonoBehaviour
                 int randomValue = UnityEngine.Random.Range(0, 5);
                 if (ans == -1)
                 {
-                    GameManager.Instance.EnemyGuess = Define.Guess.BlackJack;
+                    GameManager.Instance.EnemyGuess = Define.Guess.Spot;
                 }
                 else
                 {
@@ -130,7 +130,7 @@ public class Enemy : MonoBehaviour
                 }
                 else
                 {
-                    GameManager.Instance.EnemyGuess = Define.Guess.BlackJack;
+                    GameManager.Instance.EnemyGuess = Define.Guess.Spot;
                 }
             }
         }
