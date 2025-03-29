@@ -19,6 +19,7 @@ public class InputManager : MonoBehaviour
     InputAction _stopInputAction;
     InputAction _exitInputAction;
     InputAction _startGameInputAction;
+    InputAction _CylinderCheckInputAction;
     #endregion
 
     #region 액션
@@ -31,6 +32,8 @@ public class InputManager : MonoBehaviour
     public Action stopAction;
     public Action exitAction;
     public Action startGameAction;
+    public Action cylinderCheckAction;
+
     #endregion
 
     void Awake()
@@ -57,6 +60,7 @@ public class InputManager : MonoBehaviour
         _stopInputAction = _inputActions.Player.Stop;
         _exitInputAction = _inputActions.Player.Exit;
         _startGameInputAction = _inputActions.Player.StartGame;
+        _CylinderCheckInputAction = _inputActions.Player.CylinderCheck;
 
         _usedCardInputAction.Enable();
         _ruleInputAction.Enable();
@@ -67,6 +71,7 @@ public class InputManager : MonoBehaviour
         _stopInputAction.Enable();
         _exitInputAction.Enable();
         _startGameInputAction.Enable();
+        _CylinderCheckInputAction.Enable();
 
         _usedCardInputAction.started += OnUsedCard;
         _ruleInputAction.started += OnRule;
@@ -77,6 +82,7 @@ public class InputManager : MonoBehaviour
         _stopInputAction.started += OnStop;
         _exitInputAction.started += OnExit;
         _startGameInputAction.started += OnStartGame;
+        _CylinderCheckInputAction.started += OnCylinderCheck;
     }
 
     void OnUsedCard(InputAction.CallbackContext context)
@@ -163,6 +169,16 @@ public class InputManager : MonoBehaviour
         startGameAction?.Invoke();
     }
 
+    void OnCylinderCheck(InputAction.CallbackContext context)
+    {
+        if(GameManager.Instance.Player.CurrentState == Define.PlayState.Guess || GameManager.Instance.Player.CurrentState == Define.PlayState.Draw)
+        {
+            cylinderCheckAction?.Invoke();
+        }
+        
+        
+    }
+
     public void Clear()
     {
         // UI Action 해제
@@ -175,6 +191,7 @@ public class InputManager : MonoBehaviour
         stopAction = null;
         exitAction = null;
         startGameAction = null;
+        cylinderCheckAction = null;
 
         // Input Action 비활성화
         _usedCardInputAction.Disable();
@@ -186,6 +203,7 @@ public class InputManager : MonoBehaviour
         _stopInputAction.Disable();
         _exitInputAction.Disable();
         _startGameInputAction.Disable();
+        _CylinderCheckInputAction.Disable();
 
         // Input Action 해제
         _usedCardInputAction = null;
@@ -197,6 +215,7 @@ public class InputManager : MonoBehaviour
         _stopInputAction = null;
         _exitInputAction = null;
         _startGameInputAction = null;
+        _CylinderCheckInputAction = null;
 
         // Input System 비활성화
         _inputActions.Disable();
