@@ -24,7 +24,6 @@ public class UIManager : MonoBehaviour
     public Action disableAction;                    // 비활성화
     public Action toggleOpeningAction;              // 오프닝 토글
     public Action toggleMainCanvasAction;           // 메인 토글
-    public Action toggleGameTitleAction;            // 게임 시작 토글
     public Action toggleGuessTextAction;            // 추측 텍스트 토글
     public Action toggleDrawCanvasAction;           // 드로우 토글 (카드 뽑을지 여부)
     public Action toggleGuessResultCanvasAction;    // 추측 결과 토글
@@ -92,8 +91,8 @@ public class UIManager : MonoBehaviour
     {
         _gameTitleCanvas.enabled = true;
 
-        int highestWinstreak = PlayerPrefs.GetInt("HighestWinstreak");
-        int winStreak = PlayerPrefs.GetInt("Winstreak");
+        int highestWinstreak = DataManager.Instance.GameData.highestWinstreak;
+        int winStreak = DataManager.Instance.GameData.winStreak;
 
         if (highestWinstreak >= 20)
             _crownImage.enabled = true;

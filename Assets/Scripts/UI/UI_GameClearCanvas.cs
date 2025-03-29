@@ -22,10 +22,10 @@ public class UI_GameClearCanvas : MonoBehaviour
 
     public void ToggleGameClear()
     {
-        _gameClearWinStreak.text = $"Winstreak: {GameManager.Instance.WinStreak}";
-        if (GameManager.Instance.HighestWinStreak < GameManager.Instance.WinStreak)
+        _gameClearWinStreak.text = $"Winstreak: {DataManager.Instance.GameData.winStreak}";
+        if (DataManager.Instance.GameData.highestWinstreak < DataManager.Instance.GameData.winStreak)
         {
-            PlayerPrefs.SetInt("HighestWinstreak", GameManager.Instance.WinStreak);
+            DataManager.Instance.GameData.highestWinstreak = DataManager.Instance.GameData.winStreak;
         }
         _gameClearCanvas.enabled = !_gameClearCanvas.enabled;
     }

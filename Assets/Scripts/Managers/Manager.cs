@@ -40,6 +40,7 @@ public class Manager : MonoBehaviour
          5. GameManager
          */
 
+        DataManager.Instance.Init();
         UIManager.Instance.Init();
         InputManager.Instance.Init();
         SoundManager.Instance.Init();

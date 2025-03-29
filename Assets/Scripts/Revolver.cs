@@ -101,8 +101,9 @@ public class Revolver : MonoBehaviour
                 if (GameManager.Instance.Player.CurrentState != Define.PlayState.Death)
                 {
                     int currentWinstreak = PlayerPrefs.GetInt("Winstreak");
-                    GameManager.Instance.WinStreak = currentWinstreak + 1;
-                    PlayerPrefs.SetInt("Winstreak", GameManager.Instance.WinStreak);
+
+                    DataManager.Instance.GameData.winStreak = DataManager.Instance.GameData.winStreak + 1;
+                    DataManager.Instance.Save();
 
                     UIManager.Instance.DisableAllCanvas();
                     UIManager.Instance.toggleGameClearCanvasAction?.Invoke();
