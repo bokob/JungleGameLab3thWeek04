@@ -176,6 +176,8 @@ public class UIManager : MonoBehaviour
     // 플레이어 점수(카드 숫자 총합) 보여주기 => 총 쏘는 연출로 넘어감
     public void ToggleGuessResult()
     {
+        
+
         DisableAllCanvas();
         Tuple<int, int> points = CardManager.Instance.CalculatePoint();
         _guessResultCanvas.GetComponent<UI_GuessResultCanvas>().SetRoundResult();
@@ -194,6 +196,8 @@ public class UIManager : MonoBehaviour
     // 룰 토글
     public void ToggleRule()
     {
+        
+
         Debug.Log("룰 토글");
 
         int timeScale = (int)Time.timeScale;
