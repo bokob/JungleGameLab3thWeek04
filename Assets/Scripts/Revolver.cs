@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
-using static Unity.VisualScripting.Metadata;
 using System.Collections.Generic;
 public class Revolver : MonoBehaviour
 {
@@ -21,8 +19,8 @@ public class Revolver : MonoBehaviour
     public GameObject[] PairBullets; // 쌍쌍바 관리할 곳.
 
     private Transform _cylinderBone; // 실린더 뼈 어딨니
-    private float[] _allowedAngles = { 45f, 90f, 135f, 180f, 225f, 270f, 315f, 360f }; // 실린더 각도
-    private bool _changeRotation = false;
+    public bool IsOpenCylinder => _isOpenCylinder;
+    private bool _isOpenCylinder = false;
 
     private bool _isReload = false;
 
@@ -30,6 +28,7 @@ public class Revolver : MonoBehaviour
     {
         Init();
     }
+
 
     private void Init()
     {
@@ -75,7 +74,7 @@ public class Revolver : MonoBehaviour
 
         // 총 쏘는 애니메이션 실행 및 대기
         _playerAnimator.SetTrigger("Shoot_Trigger");
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(2.0f); 
 
         if (_ammo >= randomValue)
         {
@@ -126,7 +125,7 @@ public class Revolver : MonoBehaviour
         }
         else
         {
-
+            
             Debug.Log("안죽음");
             _ammo += 1;
             Bullt_Appear();
@@ -156,28 +155,34 @@ public class Revolver : MonoBehaviour
         int Active_Bullet = _validNumbers[randomValue]; // 활성화 시킬 총알 번호
 
 
-        PairBullets[Active_Bullet - 1].gameObject.SetActive(true);
+        PairBullets[Active_Bullet -1].gameObject.SetActive(true);
         PairBullets[Active_Bullet + 5].gameObject.SetActive(true);
 
         _validNumbers.RemoveAt(randomValue);
     }
 
 
-    void CylinderCheck()
+    public void CylinderCheck()
     {
-        if (_owner.name == "Player")
+        if(_owner.name == "Player")
         {
             _revolverAnimator.SetTrigger("Cylinder_Open");
             _playerAnimator.SetTrigger("Sylinder_Check");
+            
         }
 
+    }
+
+    public void CylinderClose()
+    {
+        _playerAnimator.SetTrigger("Sylinder_Check");
     }
 
     public void Cylinder_Open_Sounds()
     {
         if (_owner.name == "Player")
         {
-            _changeRotation = true;
+            _isOpenCylinder = true;
             SoundManager.Instance.PlayEffect("Cylinder_Open");
         }
     }
@@ -185,6 +190,7 @@ public class Revolver : MonoBehaviour
     {
         if (_owner.name == "Player")
         {
+            _isOpenCylinder = false;
             SoundManager.Instance.PlayEffect("Cylinder_Colse");
         }
 
@@ -232,9 +238,6 @@ public class Revolver : MonoBehaviour
         }
 
     }
-
-
-
 
     // 사망 시, Ragdoll 활성화
     IEnumerator Raggdoll_Active()
