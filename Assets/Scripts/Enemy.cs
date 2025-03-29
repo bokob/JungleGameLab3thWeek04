@@ -147,7 +147,7 @@ public class Enemy : MonoBehaviour
     {
         int enemyPoint = CardManager.Instance.CalculatePoint().Item2;
 
-        while (enemyPoint < GuessNumber)
+        while (enemyPoint < GuessNumber && CardManager.Instance.Deck.Count > 0)
         {
             CardManager.Instance.DrawCard();
             yield return new WaitForSeconds(0.5f);
