@@ -21,8 +21,8 @@ public class Revolver : MonoBehaviour
     public GameObject[] PairBullets; // 쌍쌍바 관리할 곳.
 
     private Transform _cylinderBone; // 실린더 뼈 어딨니
-    private float[] _allowedAngles = { 45f, 90f, 135f, 180f, 225f, 270f, 315f, 360f }; // 실린더 각도
-    private bool _changeRotation = false;
+    public bool IsOpenCylinder => _isOpenCylinder;
+    private bool _isOpenCylinder = false;
 
     void Awake()
     {
@@ -150,21 +150,27 @@ public class Revolver : MonoBehaviour
     }
 
 
-        void CylinderCheck()
+    public void CylinderCheck()
     {
         if(_owner.name == "Player")
         {
             _revolverAnimator.SetTrigger("Cylinder_Open");
             _playerAnimator.SetTrigger("Sylinder_Check");
+            
         }
 
+    }
+
+    public void CylinderClose()
+    {
+        _playerAnimator.SetTrigger("Sylinder_Check");
     }
 
     public void Cylinder_Open_Sounds()
     {
         if (_owner.name == "Player")
         {
-            _changeRotation = true;
+            _isOpenCylinder = true;
             SoundManager.Instance.PlayEffect("Cylinder_Open");
         }
     }
@@ -172,6 +178,7 @@ public class Revolver : MonoBehaviour
     {
         if (_owner.name == "Player")
         {
+            _isOpenCylinder = false;
             SoundManager.Instance.PlayEffect("Cylinder_Colse");
         }
 
