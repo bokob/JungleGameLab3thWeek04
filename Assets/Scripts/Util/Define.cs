@@ -12,7 +12,7 @@ public class Define
     {
         Ace = 0,
         Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten,
-        Jack, Queen, King
+        Jack, Queen, King, Joker
     }
 
     public enum Guess

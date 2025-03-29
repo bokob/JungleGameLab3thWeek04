@@ -157,7 +157,7 @@ public class CardManager : MonoBehaviour
         _usedDeck.Clear();
         _cardBox.transform.position = new Vector3(0, 1, 0);
 
-        for (int i = 0; i < 52; i++)
+        for (int i = 0; i < 54; i++)
             _deck.Add(Resources.Load<Card>($"Cards/{i}"));
     }
 
