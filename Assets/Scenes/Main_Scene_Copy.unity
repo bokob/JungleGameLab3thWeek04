@@ -1571,7 +1571,7 @@ GameObject:
   - component: {fileID: 182938667}
   - component: {fileID: 182938666}
   m_Layer: 5
-  m_Name: GameStartPanel
+  m_Name: GameTitlePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15912,7 +15912,7 @@ GameObject:
   - component: {fileID: 2061864012}
   - component: {fileID: 2061864011}
   m_Layer: 5
-  m_Name: GameStartCanvas
+  m_Name: GameTitleCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -4,18 +4,27 @@ using UnityEngine;
 
 public class UI_GuessResultCanvas : MonoBehaviour
 {
+    Canvas _guessResultCanvas;
+
     TextMeshProUGUI _playerPointText;   // 플레이어 점수
     TextMeshProUGUI _enemyPointText;    // 적 점수 
     TextMeshProUGUI _playerGuessText;   // 플레이어가 생각한 적의 up, blackjack, down
     TextMeshProUGUI _enemyGuessText;    // 적이 생각한 플레이어의 up, blackjack, down
 
-    void Start()
+    void Awake()
     {
+        _guessResultCanvas = GetComponent<Canvas>();
         TextMeshProUGUI[] texts = GetComponentsInChildren<TextMeshProUGUI>();
         _playerPointText = texts[0];
         _enemyPointText = texts[1];
         _playerGuessText = texts[2];
         _enemyGuessText = texts[3];
+    }
+
+    void Start()
+    {
+        UIManager.Instance.toggleGuessResultCanvasAction += ToggleGuessResult;
+        UIManager.Instance.disableAction += Disable;
     }
 
     // UI Update
@@ -51,5 +60,27 @@ public class UI_GuessResultCanvas : MonoBehaviour
         }
 
         StartCoroutine(GameManager.Instance.CameraController.GuessResultDirection(3f, playerWin, enemyWin));
+    }
+
+    // 플레이어 점수(카드 숫자 총합) 보여주기 => 총 쏘는 연출로 넘어감
+    public void ToggleGuessResult()
+    {
+
+        UIManager.Instance.DisableAllCanvas();
+        Tuple<int, int> points = CardManager.Instance.CalculatePoint();
+        _guessResultCanvas.GetComponent<UI_GuessResultCanvas>().SetRoundResult();
+        _guessResultCanvas.enabled = !_guessResultCanvas.enabled;
+        //디시전 표시
+        //points.item1 = 적 점수
+        //points.item2 = 플레이어 점수
+
+
+
+        Debug.Log(points.Item1 + " , " + points.Item2);
+    }
+
+    public void Disable()
+    {
+        _guessResultCanvas.enabled = false;
     }
 }

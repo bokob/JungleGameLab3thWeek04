@@ -60,11 +60,15 @@ public class GameManager : MonoBehaviour
         {
             GamePhase = Define.GamePhase.Opening;
             PlayerPrefs.SetInt("IsSeenOpening", 1);
+            //UIManager.Instance.toggleOpeningAction?.Invoke();
+            Debug.LogWarning("오프닝 호출");
+            
             UIManager.Instance.ToggleOpening();
         }
         else
         {
             GamePhase = Define.GamePhase.Start;
+            
         }
 
     }
@@ -97,7 +101,8 @@ public class GameManager : MonoBehaviour
         {
             _enemy.CurrentState = Define.PlayState.None;
             _player.CurrentState = Define.PlayState.None;
-            UIManager.Instance.ToggleMain();
+            UIManager.Instance.toggleMainCanvasAction?.Invoke();
+            //UIManager.Instance.ToggleMain();
             IsPlayerTurn = false;
             CardManager.Instance.StartTurn();
             Debug.Log("성공함");
@@ -115,7 +120,7 @@ public class GameManager : MonoBehaviour
         {
             if (_player.CurrentState == Define.PlayState.Draw)
             {
-                UIManager.Instance.ToggleDraw();
+                UIManager.Instance.toggleDrawCanvasAction?.Invoke();
             }
         }
         else
@@ -143,7 +148,8 @@ public class GameManager : MonoBehaviour
                 _cameraController.enabled = true;
                 //Cursor.lockState = CursorLockMode.None;
                 UIManager.Instance.DisableAllCanvas();
-                UIManager.Instance.ToggleMain();
+                UIManager.Instance.toggleMainCanvasAction?.Invoke();
+                //UIManager.Instance.ToggleMain();
                 SoundManager.Instance.PlayBGM();
                 GamePhase = Define.GamePhase.Play;
                 Invoke("NewRound", 1f);

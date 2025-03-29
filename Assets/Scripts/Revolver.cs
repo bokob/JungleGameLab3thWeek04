@@ -84,7 +84,7 @@ public class Revolver : MonoBehaviour
                 // 게임 오버
                 GameManager.Instance.GamePhase = Define.GamePhase.End;
                 UIManager.Instance.DisableAllCanvas();
-                UIManager.Instance.ToggleGameOver();
+                UIManager.Instance.toggleGameOverCanvasAction?.Invoke();
             }
             else if (_owner.gameObject.name == "Enemy")
             {
@@ -105,7 +105,8 @@ public class Revolver : MonoBehaviour
                     PlayerPrefs.SetInt("Winstreak", GameManager.Instance.WinStreak);
 
                     UIManager.Instance.DisableAllCanvas();
-                    UIManager.Instance.ToggleGameClear();
+                    UIManager.Instance.toggleGameClearCanvasAction?.Invoke();
+                    //UIManager.Instance.ToggleGameClear();
                 }
             }
         }

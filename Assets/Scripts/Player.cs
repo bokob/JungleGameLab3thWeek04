@@ -34,14 +34,17 @@ public class Player : MonoBehaviour
     public void StopDrawCard()
     {
         Debug.Log("카드 뽑기 멈춤");
-        UIManager.Instance.ToggleDraw();
+        UIManager.Instance.toggleDrawCanvasAction?.Invoke();
+        //UIManager.Instance.ToggleDraw();
 
         GameManager.Instance.Player.CurrentState = Define.PlayState.Guess;
         GameManager.Instance.Enemy.CurrentState = Define.PlayState.Guess;
         GameManager.Instance.IsPlayerTurn = false;
         GameManager.Instance.CheckState();
 
-        UIManager.Instance.ToggleGuessText();
+        UIManager.Instance.toggleGuessTextAction?.Invoke();
+
+        //UIManager.Instance.ToggleGuessText();
     }
 
     // 추측 (up: 1, spot: 2, down: 3) (추후에 플레이어에 이동)
@@ -67,6 +70,6 @@ public class Player : MonoBehaviour
         GameManager.Instance.Enemy.CurrentState = Define.PlayState.None;
         GameManager.Instance.Player.CurrentState = Define.PlayState.None;
 
-        UIManager.Instance.ToggleGuessResult(); // 추측 결과 UI
+        UIManager.Instance.toggleGuessResultCanvasAction?.Invoke(); // 추측 결과 UI 
     }
 }

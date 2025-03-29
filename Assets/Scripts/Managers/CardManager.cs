@@ -72,7 +72,7 @@ public class CardManager : MonoBehaviour
         {
             ResetDeck();
         }
-        UIManager.Instance.UIUsedCardCanvas.UpdateUsedCardUI(); // UsedCard UI 업데이트
+        UIManager.Instance.updateUsedCardUIAction?.Invoke(); // UsedCard UI 업데이트
 
         // 턴 시작시 카드 2장씩 배부
         for (int i = 0; i < 2; i++)
