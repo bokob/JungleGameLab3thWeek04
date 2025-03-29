@@ -161,7 +161,11 @@ public class GameManager : MonoBehaviour
     // 플레이어 및 적에게 총 쏘라고 명령
     public void CallShootCoroutine(bool playerWin, bool enemyWin)
     {
-        
+        if (GameManager.Instance.Player.Revolver.IsOpenCylinder)
+        {
+            GameManager.Instance.Player.Revolver.CylinderCheck();
+        }
+
         Debug.Log("뉴라운드 호출");
 
         if(playerWin && enemyWin)

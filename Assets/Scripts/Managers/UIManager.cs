@@ -184,10 +184,7 @@ public class UIManager : MonoBehaviour
         //points.item1 = 적 점수
         //points.item2 = 플레이어 점수
 
-        if(GameManager.Instance.Player.Revolver.IsOpenCylinder)
-        {
-            GameManager.Instance.Player.Revolver.CylinderCheck();
-        }
+        
 
         Debug.Log(points.Item1 + " , " + points.Item2);
     }
