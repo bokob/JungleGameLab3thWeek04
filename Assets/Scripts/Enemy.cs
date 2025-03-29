@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     Define.PlayState _currentState;
 
     int GuessNumber = 20; // 해당 숫자가 될 때까지 카드 뽑음 (2장일 때 예측 방지)
-
+    private int SumOfNumbersForMyHand = 5;
     void Start()
     {
         _revolver = GetComponentInChildren<Revolver>();
@@ -68,13 +68,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            if (standardDeviation > 2.8)
-            {
-                Debug.Log("편차가 너무 큼");
-                int randomValue = UnityEngine.Random.Range(0, 2);
-                GameManager.Instance.EnemyGuess = (randomValue == 1) ? Define.Guess.Up : Define.Guess.Down;
-            }
-            else if (standardDeviation > 1.8)
+            if (standardDeviation > 1.8)
             {
                 Debug.Log("편차가 적당함");
                 int ans = -1;
@@ -145,6 +139,8 @@ public class Enemy : MonoBehaviour
     // 카드 뽑기
     public IEnumerator DrawCoroutine()
     {
+        GuessNumber = 20;
+
         int enemyPoint = CardManager.Instance.CalculatePoint().Item2;
 
         while (enemyPoint < GuessNumber && CardManager.Instance.Deck.Count > 0)
@@ -152,7 +148,11 @@ public class Enemy : MonoBehaviour
             CardManager.Instance.DrawCard();
             yield return new WaitForSeconds(0.5f);
             enemyPoint = CardManager.Instance.CalculatePoint().Item2;
+
+            GuessNumber = GuessNumber - SumOfNumbersForMyHand;
         }
+
+        //패는 많지만 숫자 합은 작음
 
         _currentState = Define.PlayState.None;
         GameManager.Instance.Player.CurrentState = Define.PlayState.Draw;
