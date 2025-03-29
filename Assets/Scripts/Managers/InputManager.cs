@@ -175,8 +175,6 @@ public class InputManager : MonoBehaviour
         {
             cylinderCheckAction?.Invoke();
         }
-        
-        
     }
 
     public void Clear()
