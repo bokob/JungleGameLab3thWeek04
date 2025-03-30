@@ -29,7 +29,7 @@ public class CardManager : MonoBehaviour
 
     #region 카드
     public int BlackJack { get; } = 21;                         // 블랙잭 값
-    int _drawLimit = 6;                                         // 한 턴에 뽑을 수 있는 카드 수
+    int _drawLimit = 4;                                         // 한 턴에 뽑을 수 있는 카드 수
     float _cardMoveSpeed = 5;                                   // 카드 움직임 속도
     [SerializeField] float _cardSpace = 0.05f;                                   // 카드 사이 간격
     [SerializeField] Transform _playerCardPos;                  // 플레이어 카드 배치 시작 위치
