@@ -67,6 +67,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 6220227d41f5bca49b5b60e34e845b9e, type: 2}
+  - {fileID: 2100000, guid: d835857943772e5459aca3ce98a55c1c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,9 +101,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11aace16ac923cb409a6ba7bedb2b430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cardType: 7
   _number: 8
   _isAce: 0
-  _cardType: 7
 --- !u!64 &6032056476157631111
 MeshCollider:
   m_ObjectHideFlags: 0

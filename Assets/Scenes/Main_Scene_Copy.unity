@@ -7866,6 +7866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66168b9f990d5e64eb5293832e340596, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cardSpace: 0.115
   _playerCardPos: {fileID: 223189546}
   _enemyCardPos: {fileID: 1640564694}
 --- !u!4 &888410349
