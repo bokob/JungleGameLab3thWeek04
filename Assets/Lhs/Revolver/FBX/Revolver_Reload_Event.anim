@@ -13278,15 +13278,15 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.5833333
-    functionName: Cylinder_Close_Sounds
+  - time: 0.7083333
+    functionName: Cylinder_Reload_End
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.7083333
-    functionName: Cylinder_Reload_End
+  - time: 0.7916667
+    functionName: Cylinder_Close_Sounds
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

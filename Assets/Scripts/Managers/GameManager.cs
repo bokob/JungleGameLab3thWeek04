@@ -145,9 +145,15 @@ public class GameManager : MonoBehaviour
         Debug.Log("뉴라운드 호출");
 
         if(playerWin && enemyWin)
+        {
             StartCoroutine(Call(3f));
+        }
+
         else
+        {
             StartCoroutine(Call(6f));
+        }
+            
 
         if (!playerWin)
         {
