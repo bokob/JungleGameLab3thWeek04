@@ -102,8 +102,6 @@ public class Revolver : MonoBehaviour
                 GameManager.Instance.GamePhase = Define.GamePhase.End;
                 if (GameManager.Instance.Player.CurrentState != Define.PlayState.Death)
                 {
-                    int currentWinstreak = PlayerPrefs.GetInt("Winstreak");
-
                     DataManager.Instance.GameData.winStreak = DataManager.Instance.GameData.winStreak + 1;
                     if (DataManager.Instance.GameData.highestWinstreak < DataManager.Instance.GameData.winStreak)
                         DataManager.Instance.GameData.highestWinstreak = DataManager.Instance.GameData.winStreak;
