@@ -171,7 +171,7 @@ public class CardManager : MonoBehaviour
             yield return null;
         }
         dealtCard.transform.position = targetPosition;
-        dealtCard.transform.rotation = Quaternion.Euler(offset * 90f, 0f, offset * -90f);
+        dealtCard.transform.rotation = Quaternion.Euler(offset * 90f, 0f, -90f);
     }
 
     // 현재 테이블에 있는 모든 카드 제거

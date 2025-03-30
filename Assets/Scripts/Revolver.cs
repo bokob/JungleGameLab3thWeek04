@@ -85,6 +85,8 @@ public class Revolver : MonoBehaviour
                 GameManager.Instance.GamePhase = Define.GamePhase.End;
                 UIManager.Instance.DisableAllCanvas();
                 UIManager.Instance.toggleGameOverCanvasAction?.Invoke();
+                DataManager.Instance.GameData.winStreak = 0;
+                DataManager.Instance.Save();
             }
             else if (_owner.gameObject.name == "Enemy")
             {
@@ -96,13 +98,15 @@ public class Revolver : MonoBehaviour
                 StartCoroutine(Raggdoll_Active());
                 yield return new WaitForSeconds(1f);
 
-                // 게임 오버
+                // 게임 클리어
                 GameManager.Instance.GamePhase = Define.GamePhase.End;
                 if (GameManager.Instance.Player.CurrentState != Define.PlayState.Death)
                 {
                     int currentWinstreak = PlayerPrefs.GetInt("Winstreak");
 
                     DataManager.Instance.GameData.winStreak = DataManager.Instance.GameData.winStreak + 1;
+                    if (DataManager.Instance.GameData.highestWinstreak < DataManager.Instance.GameData.winStreak)
+                        DataManager.Instance.GameData.highestWinstreak = DataManager.Instance.GameData.winStreak;
                     DataManager.Instance.Save();
 
                     UIManager.Instance.DisableAllCanvas();
