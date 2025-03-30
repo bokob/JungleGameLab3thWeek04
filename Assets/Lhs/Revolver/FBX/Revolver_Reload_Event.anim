@@ -13285,7 +13285,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.7916667
+  - time: 0.7083333
+    functionName: Cylinder_Bullet_Out
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.0416666
     functionName: Cylinder_Close_Sounds
     data: 
     objectReferenceParameter: {fileID: 0}
