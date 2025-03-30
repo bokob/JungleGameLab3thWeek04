@@ -92,7 +92,7 @@ public class UIManager : MonoBehaviour
         int highestWinstreak = DataManager.Instance.GameData.highestWinstreak;
         int winStreak = DataManager.Instance.GameData.winStreak;
 
-        if (highestWinstreak >= 20)
+        if (highestWinstreak >= 10)
             _crownImage.enabled = true;
 
         _highestWinStreak.text = $"Highest Winstreak: {highestWinstreak}";
