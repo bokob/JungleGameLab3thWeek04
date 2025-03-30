@@ -8,23 +8,17 @@ public class Manager : MonoBehaviour
     void Awake()
     {
         _instance = this;
+        
     }
 
     void Start()
-    {    
+    {
         Init();
     }
 
     void Init()
     {
-        /*
-         1. UIManager
-         2. InputManager
-         3. SoundManager
-         4. CardManager
-         5. GameManager
-         */
-
+        DataManager.Instance.Init();
         UIManager.Instance.Init();
         InputManager.Instance.Init();
         SoundManager.Instance.Init();

@@ -29,9 +29,9 @@ public class CardManager : MonoBehaviour
 
     #region 카드
     public int BlackJack { get; } = 21;                         // 블랙잭 값
-    int _drawLimit = 6;                                         // 한 턴에 뽑을 수 있는 카드 수
+    int _drawLimit = 4;                                         // 한 턴에 뽑을 수 있는 카드 수
     float _cardMoveSpeed = 5;                                   // 카드 움직임 속도
-    float _cardSpace = 0.05f;                                   // 카드 사이 간격
+    [SerializeField] float _cardSpace = 0.05f;                                   // 카드 사이 간격
     [SerializeField] Transform _playerCardPos;                  // 플레이어 카드 배치 시작 위치
     [SerializeField] Transform _enemyCardPos;                   // 적 카드 배치 시작 위치
     List<GameObject> _cardsOnTable = new List<GameObject>();    // 테이블에 있는 카드 리스트
@@ -72,7 +72,7 @@ public class CardManager : MonoBehaviour
         {
             ResetDeck();
         }
-        UIManager.Instance.UIUsedCardCanvas.UpdateUsedCardUI(); // UsedCard UI 업데이트
+        UIManager.Instance.updateUsedCardUIAction?.Invoke(); // UsedCard UI 업데이트
 
         // 턴 시작시 카드 2장씩 배부
         for (int i = 0; i < 2; i++)
@@ -99,19 +99,9 @@ public class CardManager : MonoBehaviour
     public void DrawCard() // 덱에서 한 장을 뽑아 플레이어 또는 상대 덱에 넣기
     {
         if (_deck.Count == 0)
-        {
-            //if (!GameManager.Instance.IsPlayerTurn)
-            //{
-            //    GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn; // 덱에 남은 카드가 없을 시 턴 종료
-            //    GameManager.Instance.CheckState();                                      // 턴 종료
-            //} 
-            //else
-            //{
-            //    GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn; // 덱에 남은 카드가 없을 시 턴 종료
-            //    GameManager.Instance.CheckState();
-            //    GameManager.Instance.Player.StopDrawCard();
-            //}
-            if (GameManager.Instance.IsPlayerTurn) {
+        { 
+            if (GameManager.Instance.IsPlayerTurn) 
+            {
                 GameManager.Instance.IsPlayerTurn = !GameManager.Instance.IsPlayerTurn; // 덱에 남은 카드가 없을 시 턴 종료
                 GameManager.Instance.Player.StopDrawCard();
             }
@@ -157,7 +147,7 @@ public class CardManager : MonoBehaviour
         _usedDeck.Clear();
         _cardBox.transform.position = new Vector3(0, 1, 0);
 
-        for (int i = 0; i < 52; i++)
+        for (int i = 0; i < 54; i++)
             _deck.Add(Resources.Load<Card>($"Cards/{i}"));
     }
 

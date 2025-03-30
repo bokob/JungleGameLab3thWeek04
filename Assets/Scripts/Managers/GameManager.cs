@@ -11,9 +11,6 @@ public class GameManager : MonoBehaviour
     #region 게임
     public Define.GamePhase GamePhase { get; set; } // 게임 흐름
     public bool IsPlayerTurn { get; set; }          // 플레이어 차례 여부
-    public int IsSeenOpening { get; set; }         // 오프닝 시청 여부
-    public int HighestWinStreak { get; set; }       // 최고 연승
-    public int WinStreak { get; set; }              // 연승
     #endregion
 
     #region 카메라
@@ -54,41 +51,20 @@ public class GameManager : MonoBehaviour
         _player.CurrentState = Define.PlayState.None;
         _enemy.CurrentState = Define.PlayState.None;
 
-        LoadGameInfo();
-        
-        if(IsSeenOpening == 0)
-        {
-            GamePhase = Define.GamePhase.Opening;
-            PlayerPrefs.SetInt("IsSeenOpening", 1);
-            UIManager.Instance.ToggleOpening();
-        }
-        else
+        if(DataManager.Instance.GameData == null)
+            Debug.Log("GameData is null");
+
+        if (DataManager.Instance.GameData.isSeenOpening)
         {
             GamePhase = Define.GamePhase.Start;
         }
-
-    }
-
-    // 게임 정보 불러오기
-    void LoadGameInfo()
-    {
-        // 연승
-        if (PlayerPrefs.HasKey("Winstreak"))
-            WinStreak = PlayerPrefs.GetInt("Winstreak");
         else
-            PlayerPrefs.SetInt("Winstreak", 0);
-
-        // 최대 연승
-        if (PlayerPrefs.HasKey("HighestWinstreak"))
-            WinStreak = PlayerPrefs.GetInt("HighestWinstreak");
-        else
-            PlayerPrefs.SetInt("HighestWinstreak", 0);
-
-        // 오프닝 시청 기록
-        if (PlayerPrefs.HasKey("IsSeenOpening"))
-            IsSeenOpening = PlayerPrefs.GetInt("IsSeenOpening");
-        else
-            PlayerPrefs.SetInt("IsSeenOpening", 0);
+        {
+            GamePhase = Define.GamePhase.Opening;
+            DataManager.Instance.GameData.isSeenOpening = true;
+            DataManager.Instance.Save();
+            UIManager.Instance.ToggleOpening();
+        }
     }
 
     public void NewRound()
@@ -97,7 +73,8 @@ public class GameManager : MonoBehaviour
         {
             _enemy.CurrentState = Define.PlayState.None;
             _player.CurrentState = Define.PlayState.None;
-            UIManager.Instance.ToggleMain();
+            UIManager.Instance.toggleMainCanvasAction?.Invoke();
+            //UIManager.Instance.ToggleMain();
             IsPlayerTurn = false;
             CardManager.Instance.StartTurn();
             Debug.Log("성공함");
@@ -115,7 +92,7 @@ public class GameManager : MonoBehaviour
         {
             if (_player.CurrentState == Define.PlayState.Draw)
             {
-                UIManager.Instance.ToggleDraw();
+                UIManager.Instance.toggleDrawCanvasAction?.Invoke();
             }
         }
         else
@@ -143,7 +120,8 @@ public class GameManager : MonoBehaviour
                 _cameraController.enabled = true;
                 //Cursor.lockState = CursorLockMode.None;
                 UIManager.Instance.DisableAllCanvas();
-                UIManager.Instance.ToggleMain();
+                UIManager.Instance.toggleMainCanvasAction?.Invoke();
+                //UIManager.Instance.ToggleMain();
                 SoundManager.Instance.PlayBGM();
                 GamePhase = Define.GamePhase.Play;
                 Invoke("NewRound", 1f);
@@ -161,10 +139,8 @@ public class GameManager : MonoBehaviour
     // 플레이어 및 적에게 총 쏘라고 명령
     public void CallShootCoroutine(bool playerWin, bool enemyWin)
     {
-        if (GameManager.Instance.Player.Revolver.IsOpenCylinder)
-        {
-            GameManager.Instance.Player.Revolver.CylinderCheck();
-        }
+        if (_player.Revolver.IsOpenCylinder)
+            _player.Revolver.CylinderCheck();
 
         Debug.Log("뉴라운드 호출");
 
@@ -198,6 +174,7 @@ public class GameManager : MonoBehaviour
     public void GameExit()
     {
         Debug.Log("게임 종료");
+        DataManager.Instance.Save();
         InputManager.Instance.Clear();
         Application.Quit();
     }

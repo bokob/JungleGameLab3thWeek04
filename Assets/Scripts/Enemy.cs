@@ -10,8 +10,8 @@ public class Enemy : MonoBehaviour
     Revolver _revolver;
     Define.PlayState _currentState;
 
-    int GuessNumber = 20; // 해당 숫자가 될 때까지 카드 뽑음 (2장일 때 예측 방지)
-    private int SumOfNumbersForMyHand = 5;
+    int _guessNumber = 20; // 해당 숫자가 될 때까지 카드 뽑음 (2장일 때 예측 방지)
+    int _sumOfNumbersForMyHand = 5;
     void Start()
     {
         _revolver = GetComponentInChildren<Revolver>();
@@ -139,17 +139,17 @@ public class Enemy : MonoBehaviour
     // 카드 뽑기
     public IEnumerator DrawCoroutine()
     {
-        GuessNumber = 20;
+        _guessNumber = 20;
 
         int enemyPoint = CardManager.Instance.CalculatePoint().Item2;
 
-        while (enemyPoint < GuessNumber && CardManager.Instance.Deck.Count > 0)
+        while (enemyPoint < _guessNumber && CardManager.Instance.Deck.Count > 0)
         {
             CardManager.Instance.DrawCard();
             yield return new WaitForSeconds(0.5f);
             enemyPoint = CardManager.Instance.CalculatePoint().Item2;
 
-            GuessNumber = GuessNumber - SumOfNumbersForMyHand;
+            _guessNumber = _guessNumber - _sumOfNumbersForMyHand;
         }
 
         //패는 많지만 숫자 합은 작음

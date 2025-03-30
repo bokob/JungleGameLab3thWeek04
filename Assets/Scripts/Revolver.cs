@@ -16,7 +16,7 @@ public class Revolver : MonoBehaviour
     List<int> _validNumbers = new List<int>();
 
     private const int _pairCount = 12; // 총알 쌍 개수 6쌍~ 6쌍쌍바 ㅋㅋ
-    public GameObject[] PairBullets; // 쌍쌍바 관리할 곳.
+    public GameObject[] pairBullets; // 쌍쌍바 관리할 곳.
 
     private Transform _cylinderBone; // 실린더 뼈 어딨니
     public bool IsOpenCylinder => _isOpenCylinder;
@@ -33,10 +33,10 @@ public class Revolver : MonoBehaviour
     private void Init()
     {
         //자식 오브젝트 6개 가져올 곳.
-        PairBullets = new GameObject[_pairCount];
+        pairBullets = new GameObject[_pairCount];
         for (int i = 0; i < _pairCount; i++)
         {
-            PairBullets[i] = transform.GetChild(i).gameObject;
+            pairBullets[i] = transform.GetChild(i).gameObject;
         }
 
         _validNumbers.AddRange(new int[] { 1, 2, 3, 4, 5, 6 });
@@ -98,7 +98,7 @@ public class Revolver : MonoBehaviour
                 // 게임 오버
                 GameManager.Instance.GamePhase = Define.GamePhase.End;
                 UIManager.Instance.DisableAllCanvas();
-                UIManager.Instance.ToggleGameOver();
+                UIManager.Instance.toggleGameOverCanvasAction?.Invoke();
             }
             else if (_owner.gameObject.name == "Enemy")
             {
@@ -115,11 +115,13 @@ public class Revolver : MonoBehaviour
                 if (GameManager.Instance.Player.CurrentState != Define.PlayState.Death)
                 {
                     int currentWinstreak = PlayerPrefs.GetInt("Winstreak");
-                    GameManager.Instance.WinStreak = currentWinstreak + 1;
-                    PlayerPrefs.SetInt("Winstreak", GameManager.Instance.WinStreak);
+
+                    DataManager.Instance.GameData.winStreak = DataManager.Instance.GameData.winStreak + 1;
+                    DataManager.Instance.Save();
 
                     UIManager.Instance.DisableAllCanvas();
-                    UIManager.Instance.ToggleGameClear();
+                    UIManager.Instance.toggleGameClearCanvasAction?.Invoke();
+                    //UIManager.Instance.ToggleGameClear();
                 }
             }
         }
@@ -154,9 +156,8 @@ public class Revolver : MonoBehaviour
         int randomValue = Random.Range(1, _validNumbers.Count); // 인덱스 번호
         int Active_Bullet = _validNumbers[randomValue]; // 활성화 시킬 총알 번호
 
-
-        PairBullets[Active_Bullet -1].gameObject.SetActive(true);
-        PairBullets[Active_Bullet + 5].gameObject.SetActive(true);
+        pairBullets[Active_Bullet -1].gameObject.SetActive(true);
+        pairBullets[Active_Bullet + 5].gameObject.SetActive(true);
 
         _validNumbers.RemoveAt(randomValue);
     }
@@ -170,7 +171,6 @@ public class Revolver : MonoBehaviour
             _playerAnimator.SetTrigger("Sylinder_Check");
             
         }
-
     }
 
     public void CylinderClose()
@@ -193,7 +193,6 @@ public class Revolver : MonoBehaviour
             _isOpenCylinder = false;
             SoundManager.Instance.PlayEffect("Cylinder_Colse");
         }
-
     }
 
     public void Cylinder_Spin_Sounds()
@@ -209,10 +208,7 @@ public class Revolver : MonoBehaviour
         if (_owner.name == "Player")
         {
             int randomValue = Random.Range(0, 8);
-
             _cylinderBone.transform.rotation = Quaternion.Euler(90, 0, 0);
-
-
             Debug.Log("돌림");
         }
     }
