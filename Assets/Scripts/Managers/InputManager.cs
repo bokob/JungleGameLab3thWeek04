@@ -87,7 +87,7 @@ public class InputManager : MonoBehaviour
 
     void OnUsedCard(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Started)
+        if (context.phase == InputActionPhase.Started)
         {
             toggleUsedCardAction?.Invoke();
         }
@@ -97,7 +97,10 @@ public class InputManager : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started)
         {
-            toggleRuleAction?.Invoke();
+            if (GameManager.Instance.GamePhase == Define.GamePhase.Play)
+            {
+                toggleRuleAction?.Invoke();
+            }
         }
     }
 
@@ -171,7 +174,7 @@ public class InputManager : MonoBehaviour
 
     void OnCylinderCheck(InputAction.CallbackContext context)
     {
-        if(GameManager.Instance.Player.CurrentState == Define.PlayState.Guess || GameManager.Instance.Player.CurrentState == Define.PlayState.Draw)
+        if (GameManager.Instance.Player.CurrentState == Define.PlayState.Guess || GameManager.Instance.Player.CurrentState == Define.PlayState.Draw)
         {
             cylinderCheckAction?.Invoke();
         }

@@ -116,7 +116,6 @@ public class GameManager : MonoBehaviour
             case Define.GamePhase.Opening:
                 break;
             case Define.GamePhase.Start:
-                Time.timeScale = 1f;
                 _cameraController.enabled = true;
                 //Cursor.lockState = CursorLockMode.None;
                 UIManager.Instance.DisableAllCanvas();
@@ -127,6 +126,7 @@ public class GameManager : MonoBehaviour
                 Invoke("NewRound", 1f);
                 break;
             case Define.GamePhase.Play:
+                Time.timeScale = 1f;
                 break;
             case Define.GamePhase.End:
                 Scene gameScene = SceneManager.GetActiveScene();
