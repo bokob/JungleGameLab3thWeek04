@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public Revolver Revolver => _revolver;
 
     Define.PlayState _currentState;
-    Revolver _revolver;
+    public Revolver _revolver;
 
     void Start()
     {

@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     public Define.PlayState CurrentState { get => _currentState; set => _currentState = value; }
     public Revolver Revolver => _revolver;
 
-    Revolver _revolver;
+    public Revolver _revolver;
     Define.PlayState _currentState;
 
     int _guessNumber = 20; // 해당 숫자가 될 때까지 카드 뽑음 (2장일 때 예측 방지)

@@ -11,7 +11,12 @@ public class GameManager : MonoBehaviour
     #region 게임
     public Define.GamePhase GamePhase { get; set; } // 게임 흐름
     public bool IsPlayerTurn { get; set; }          // 플레이어 차례 여부
+
+    public bool _Player_Spot = false;
+    public bool _Enemy_Spot = false;
     #endregion
+
+
 
     #region 카메라
     public CameraController CameraController => _cameraController;
@@ -145,9 +150,28 @@ public class GameManager : MonoBehaviour
         Debug.Log("뉴라운드 호출");
 
         if(playerWin && enemyWin)
+        {
             StartCoroutine(Call(3f));
+        }
         else
+        {
             StartCoroutine(Call(6f));
+        }
+
+        if(playerWin || enemyWin)
+        {
+            if(playerWin && _Player_Spot)
+            {
+                Player.GetComponent<Player>()._revolver.Cylinder_Reload_Start();
+                _Player_Spot = false;
+            }
+            if(enemyWin && _Enemy_Spot)
+            {
+                Enemy.GetComponent<Enemy>()._revolver.Cylinder_Reload_Start();
+                _Player_Spot = false;
+            }
+        }
+            
 
         if (!playerWin)
         {

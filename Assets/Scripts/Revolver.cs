@@ -22,10 +22,13 @@ public class Revolver : MonoBehaviour
     public bool IsOpenCylinder => _isOpenCylinder;
     private bool _isOpenCylinder = false;
 
+    public bool _isReload = false;
+
     void Awake()
     {
         Init();
     }
+
 
     private void Init()
     {
@@ -52,6 +55,17 @@ public class Revolver : MonoBehaviour
         _camera = FindAnyObjectByType<CameraController>().gameObject;
 
         Bullt_Appear();
+    }
+
+    private void Update()
+    {
+        /*if (Input.GetKeyDown(KeyCode.N))
+        {
+            if (_owner.name == "Player")
+            {
+                Cylinder_Reload_Start();
+            }
+        }*/
     }
 
     public IEnumerator Shoot() // 총알 발사(자기 머리 쏘기) 판단
@@ -199,6 +213,41 @@ public class Revolver : MonoBehaviour
             _cylinderBone.transform.rotation = Quaternion.Euler(90, 0, 0);
             Debug.Log("돌림");
         }
+    }
+
+    public void Cylinder_Reload_Start()
+    {
+        if (_owner.name == "Player")
+        {
+            _revolverAnimator.SetTrigger("Reload");
+            _playerAnimator.SetTrigger("Sylinder_Check");
+        }
+
+    }
+
+    public void Cylinder_Bullet_Out()
+    {
+        for (int i = 0; i < _pairCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
+
+        if(_ammo > 0)
+        {
+            SoundManager.Instance.PlayEffect("Bullet_Bounce");
+            _ammo = 0;
+        }
+        
+    }
+
+    public void Cylinder_Reload_End()
+    {
+        if (_owner.name == "Player")
+        {
+            _revolverAnimator.ResetTrigger("Reload");
+            _playerAnimator.SetTrigger("Sylinder_Check");
+        }
+
     }
 
     // 사망 시, Ragdoll 활성화

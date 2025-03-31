@@ -48,6 +48,12 @@ public class UI_GuessResultCanvas : MonoBehaviour
             || (GameManager.Instance.PlayerGuess == Define.Guess.Spot && enemyPoint == 21)
             || (GameManager.Instance.PlayerGuess == Define.Guess.Down && enemyPoint < 21))
         {
+            if (GameManager.Instance.PlayerGuess == Define.Guess.Spot && enemyPoint == 21)
+            { // 맞춘 경우.
+
+                GameManager.Instance._Player_Spot = true;
+            }
+
             _playerGuessText.color = Color.white;
             playerWin = true;
         }
@@ -55,6 +61,10 @@ public class UI_GuessResultCanvas : MonoBehaviour
             || (GameManager.Instance.EnemyGuess == Define.Guess.Spot && playerPoint == 21)
             || (GameManager.Instance.EnemyGuess == Define.Guess.Down && playerPoint < 21))
         {
+            if (GameManager.Instance.PlayerGuess == Define.Guess.Spot && enemyPoint == 21)
+            { // 맞춘 경우.
+                GameManager.Instance._Enemy_Spot = true;
+            }
             _enemyGuessText.color = Color.white;
             enemyWin = true;
         }
