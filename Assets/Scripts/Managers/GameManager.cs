@@ -161,12 +161,12 @@ public class GameManager : MonoBehaviour
         {
             if(playerWin && _Player_Spot)
             {
-                Player.GetComponent<Player>()._revolver.Cylinder_Reload_Start();
+                Player.GetComponent<Player>().Revolver.Cylinder_Reload_Start();
                 _Player_Spot = false;
             }
             if(enemyWin && _Enemy_Spot)
             {
-                Enemy.GetComponent<Enemy>()._revolver.Cylinder_Reload_Start();
+                Enemy.GetComponent<Enemy>().Revolver.Cylinder_Reload_Start();
                 _Player_Spot = false;
             }
         }

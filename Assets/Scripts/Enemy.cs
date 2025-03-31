@@ -7,11 +7,15 @@ public class Enemy : MonoBehaviour
     public Define.PlayState CurrentState { get => _currentState; set => _currentState = value; }
     public Revolver Revolver => _revolver;
 
-    public Revolver _revolver;
+    Revolver _revolver;
     Define.PlayState _currentState;
 
-    int _guessNumber = 20; // 해당 숫자가 될 때까지 카드 뽑음 (2장일 때 예측 방지)
-    int _sumOfNumbersForMyHand = 5;
+    int _guessNumber;
+    int _twoHandguessNumber = 20; // 해당 숫자가 될 때까지 카드 뽑음 (2장일 때 예측 방지)
+    int _threeHandguessNumber = 18;
+
+    [SerializeField] int CheckNumber = 0;
+
     void Start()
     {
         _revolver = GetComponentInChildren<Revolver>();
@@ -58,79 +62,108 @@ public class Enemy : MonoBehaviour
         varianceScore /= (playerDeck.Count + deck.Count);
         float standardDeviation = math.sqrt(varianceScore);
 
-        if (playerDeck.Count == 2)
+        Debug.Log(standardDeviation);
+
+        if (deck.Count == 0)
         {
-            GameManager.Instance.EnemyGuess = Define.Guess.Down;
-        }
-        else if (playerDeck.Count > 4)
-        {
-            GameManager.Instance.EnemyGuess = Define.Guess.Up;
-        }
-        else
-        {
-            if (standardDeviation > 1.8)
+            int SumPlayerNumber = 0;
+
+            foreach (Card card in playerDeck)
             {
-                Debug.Log("편차가 적당함");
-                int ans = -1;
-                if (predictScore > CardManager.Instance.BlackJack) // up
-                {
-                    ans = 0;
-                }
-                else if (predictScore < CardManager.Instance.BlackJack) // down
-                {
-                    ans = 1;
-                }
+                SumPlayerNumber = card.Number;
+            }
 
-                int randomValue = UnityEngine.Random.Range(0, 5);
-                if (ans == -1)
-                {
-                    GameManager.Instance.EnemyGuess = Define.Guess.Spot;
-                }
-                else
-                {
-                    if (ans == 0)
-                    {
-                        if (randomValue == 4)
-                        {
-                            Debug.Log("운나쁘게 다운으로 해석함");
-                            GameManager.Instance.EnemyGuess = Define.Guess.Down;
-                        }
-                        else
-                        {
-                            Debug.Log("바르게 업으로 해석함");
-                            GameManager.Instance.EnemyGuess = Define.Guess.Up;
-                        }
-                    }
-                    else
-                    {
-                        if (randomValue == 4)
-                        {
-                            Debug.Log("운나쁘게 업으로 해석함");
-                            GameManager.Instance.EnemyGuess = Define.Guess.Up;
-                        }
-                        else
-                        {
-                            Debug.Log("바르게 다운으로 해석함");
-                            GameManager.Instance.EnemyGuess = Define.Guess.Down;
-                        }
-                    }
-                }
-
+            if (SumPlayerNumber > CardManager.Instance.BlackJack) // up
+            {
+                GameManager.Instance.EnemyGuess = Define.Guess.Up;
+            }
+            else if (SumPlayerNumber < CardManager.Instance.BlackJack) // down
+            {
+                GameManager.Instance.EnemyGuess = Define.Guess.Down;
             }
             else
             {
-                Debug.Log("편차 적음");
-                if (predictScore > CardManager.Instance.BlackJack) // up
+                GameManager.Instance.EnemyGuess = Define.Guess.Spot;
+            }
+        }
+        else
+        {
+            if (playerDeck.Count == 2)
+            {
+                Debug.Log("체크용");
+                int randomValue = UnityEngine.Random.Range(0, 4);
+
+                if (randomValue == 0) GameManager.Instance.EnemyGuess = Define.Guess.Spot;
+                else GameManager.Instance.EnemyGuess = Define.Guess.Down;
+            }
+            else
+            {
+                if (standardDeviation > 2.8)
                 {
-                    GameManager.Instance.EnemyGuess = Define.Guess.Up;
-                }
-                else if (predictScore < CardManager.Instance.BlackJack) // down
-                {
-                    GameManager.Instance.EnemyGuess = Define.Guess.Down;
+                    Debug.Log("편차가 적당함");
+
+                    int ans = -1;
+                    if (predictScore > CardManager.Instance.BlackJack) // up
+                    {
+                        ans = 0;
+                    }
+                    else if (predictScore < CardManager.Instance.BlackJack) // down
+                    {
+                        ans = 1;
+                    }
+
+                    int randomValue = UnityEngine.Random.Range(0, 100);
+
+                    if (ans == -1)
+                    {
+                        GameManager.Instance.EnemyGuess = Define.Guess.Spot;
+                    }
+                    else
+                    {
+                        if (ans == 0)
+                        {
+                            if (randomValue < CheckNumber)
+                            {
+                                Debug.Log("운나쁘게 다운으로 해석함");
+                                GameManager.Instance.EnemyGuess = Define.Guess.Down;
+                            }
+                            else
+                            {
+                                Debug.Log("바르게 업으로 해석함");
+                                GameManager.Instance.EnemyGuess = Define.Guess.Up;
+                            }
+                        }
+                        else
+                        {
+                            if (randomValue < CheckNumber)
+                            {
+                                Debug.Log("운나쁘게 업으로 해석함");
+                                GameManager.Instance.EnemyGuess = Define.Guess.Up;
+                            }
+                            else
+                            {
+                                Debug.Log("바르게 다운으로 해석함");
+                                GameManager.Instance.EnemyGuess = Define.Guess.Down;
+                            }
+                        }
+                    }
+
                 }
                 else
                 {
-                    GameManager.Instance.EnemyGuess = Define.Guess.Spot;
+                    Debug.Log("편차 적음");
+                    if (predictScore > CardManager.Instance.BlackJack) // up
+                    {
+                        GameManager.Instance.EnemyGuess = Define.Guess.Up;
+                    }
+                    else if (predictScore < CardManager.Instance.BlackJack) // down
+                    {
+                        GameManager.Instance.EnemyGuess = Define.Guess.Down;
+                    }
+                    else
+                    {
+                        GameManager.Instance.EnemyGuess = Define.Guess.Spot;
+                    }
                 }
             }
         }
@@ -139,7 +172,7 @@ public class Enemy : MonoBehaviour
     // 카드 뽑기
     public IEnumerator DrawCoroutine()
     {
-        _guessNumber = 20;
+        _guessNumber = _twoHandguessNumber;
 
         int enemyPoint = CardManager.Instance.CalculatePoint().Item2;
 
@@ -149,7 +182,8 @@ public class Enemy : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             enemyPoint = CardManager.Instance.CalculatePoint().Item2;
 
-            _guessNumber = _guessNumber - _sumOfNumbersForMyHand;
+            if (_guessNumber == _threeHandguessNumber) break;
+            else _guessNumber = _threeHandguessNumber;
         }
 
         //패는 많지만 숫자 합은 작음
