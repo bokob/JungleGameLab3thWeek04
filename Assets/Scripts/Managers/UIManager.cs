@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
 
     Canvas _gameTitleCanvas;
     Image _crownImage;  // 왕관 이미지
-    TextMeshProUGUI _highestWinStreak;
+    TextMeshProUGUI _tournamentWinCount;
     TextMeshProUGUI _gameStartWinStreak;
 
     #region 영상
@@ -44,7 +44,7 @@ public class UIManager : MonoBehaviour
     {
         _gameTitleCanvas = FindAnyObjectByType<UI_GameTitleCanvas>().gameObject.GetComponent<Canvas>();
         _crownImage = FindAnyObjectByType<UI_CrownImage>().gameObject.GetComponent<Image>();
-        _highestWinStreak = FindAnyObjectByType<UI_HighestWinStreak>().gameObject.GetComponent<TextMeshProUGUI>();
+        _tournamentWinCount = FindAnyObjectByType<UI_HighestWinStreak>().gameObject.GetComponent<TextMeshProUGUI>();
         _gameStartWinStreak = FindAnyObjectByType<UI_GameStartWinStreak>().gameObject.GetComponent<TextMeshProUGUI>();
 
         // 영상
@@ -89,13 +89,13 @@ public class UIManager : MonoBehaviour
     {
         _gameTitleCanvas.enabled = true;
 
-        int highestWinstreak = DataManager.Instance.GameData.highestWinstreak;
+        int tournamentWinCount = DataManager.Instance.GameData.tournamentWinCount;
         int winStreak = DataManager.Instance.GameData.winStreak;
 
-        if (highestWinstreak >= 10)
+        if (tournamentWinCount >= 2)
             _crownImage.enabled = true;
 
-        _highestWinStreak.text = $"Highest Winstreak: {highestWinstreak}";
+        _tournamentWinCount.text = $"Tournament Win Count: {tournamentWinCount}";
         _gameStartWinStreak.text = $"Winstreak: {winStreak}";
 
         Debug.LogWarning("게임 타이틀 활성화");
@@ -123,5 +123,18 @@ public class UIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         action.Invoke();
+    }
+
+    void OnDestroy()
+    {
+        disableAction = null;          
+        toggleOpeningAction = null;         
+        toggleMainCanvasAction = null;            
+        toggleGuessTextAction = null;              
+        toggleDrawCanvasAction = null;             
+        toggleGuessResultCanvasAction = null;     
+        toggleGameOverCanvasAction = null;       
+        toggleGameClearCanvasAction = null;      
+        updateUsedCardUIAction = null;
     }
 }

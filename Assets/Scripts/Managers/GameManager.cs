@@ -134,9 +134,8 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1f;
                 break;
             case Define.GamePhase.End:
-                Scene gameScene = SceneManager.GetActiveScene();
                 InputManager.Instance.Clear();
-                SceneManager.LoadScene(gameScene.name);
+                SceneManager.LoadScene(0);
                 break;
         }
     }

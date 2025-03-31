@@ -18,7 +18,7 @@ public class Manager : MonoBehaviour
 
     void Init()
     {
-        DataManager.Instance.Init();
+        //DataManager.Instance.Init();
         UIManager.Instance.Init();
         InputManager.Instance.Init();
         SoundManager.Instance.Init();

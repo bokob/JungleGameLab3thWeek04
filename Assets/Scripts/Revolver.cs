@@ -57,17 +57,6 @@ public class Revolver : MonoBehaviour
         Bullt_Appear();
     }
 
-    private void Update()
-    {
-        /*if (Input.GetKeyDown(KeyCode.N))
-        {
-            if (_owner.name == "Player")
-            {
-                Cylinder_Reload_Start();
-            }
-        }*/
-    }
-
     public IEnumerator Shoot() // 총알 발사(자기 머리 쏘기) 판단
     {
         int randomValue = Random.Range(1, 6);
@@ -84,8 +73,6 @@ public class Revolver : MonoBehaviour
 
             if (_owner.gameObject.name == "Player") // 플레이어가 사망
             {
-                PlayerPrefs.SetInt("Winstreak", 0);
-
                 Debug.Log("플레이어 사망");
                 _owner.GetComponent<Player>().CurrentState = Define.PlayState.Death;
 
@@ -117,8 +104,6 @@ public class Revolver : MonoBehaviour
                 if (GameManager.Instance.Player.CurrentState != Define.PlayState.Death)
                 {
                     DataManager.Instance.GameData.winStreak = DataManager.Instance.GameData.winStreak + 1;
-                    if (DataManager.Instance.GameData.highestWinstreak < DataManager.Instance.GameData.winStreak)
-                        DataManager.Instance.GameData.highestWinstreak = DataManager.Instance.GameData.winStreak;
                     DataManager.Instance.Save();
 
                     UIManager.Instance.DisableAllCanvas();
