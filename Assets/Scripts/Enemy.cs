@@ -11,8 +11,8 @@ public class Enemy : MonoBehaviour
     Define.PlayState _currentState;
 
     int _guessNumber;
-    int _twoHandguessNumber = 20; // 해당 숫자가 될 때까지 카드 뽑음 (2장일 때 예측 방지)
-    int _threeHandguessNumber = 18;
+    [SerializeField] int _twoHandguessNumber = 20; // 해당 숫자가 될 때까지 카드 뽑음 (2장일 때 예측 방지)
+    [SerializeField] int _threeHandguessNumber = 18;
 
     [SerializeField] int CheckNumber = 0;
 

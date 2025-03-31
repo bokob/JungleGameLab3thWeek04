@@ -18498,6 +18498,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce06e6ddbb8dd54eb53e36c3cc0d973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _twoHandguessNumber: 4
+  _threeHandguessNumber: 2
+  CheckNumber: 100
 --- !u!95 &1887199846
 Animator:
   serializedVersion: 7

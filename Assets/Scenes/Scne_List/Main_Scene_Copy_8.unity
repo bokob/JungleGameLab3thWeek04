@@ -1691,7 +1691,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: James
+  m_text: John
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5978e2e30942221438cc66e6ac10fb98, type: 2}
   m_sharedMaterial: {fileID: 8780485603876257976, guid: 5978e2e30942221438cc66e6ac10fb98, type: 2}
@@ -16517,6 +16517,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce06e6ddbb8dd54eb53e36c3cc0d973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _twoHandguessNumber: 20
+  _threeHandguessNumber: 18
+  CheckNumber: 60
 --- !u!95 &1887199846
 Animator:
   serializedVersion: 7
